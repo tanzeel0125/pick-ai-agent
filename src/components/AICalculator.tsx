@@ -21,6 +21,13 @@ interface CalculatorInputs {
   platforms: string[];
   fineTune: string;
   budgetConcern: string;
+  latencyNeeds: string;
+  dataCompliance: string;
+  contextWindow: string;
+  usagePattern: string;
+  primaryMarket: string;
+  teamSize: string;
+  revenueModel: string;
 }
 
 interface AIModel {
@@ -72,7 +79,14 @@ export default function AICalculator() {
     speedVsReasoning: 50,
     platforms: [],
     fineTune: '',
-    budgetConcern: ''
+    budgetConcern: '',
+    latencyNeeds: '',
+    dataCompliance: '',
+    contextWindow: '',
+    usagePattern: '',
+    primaryMarket: '',
+    teamSize: '',
+    revenueModel: ''
   });
 
   const [recommendations, setRecommendations] = useState<{model: AIModel, score: number, monthlyCost: number}[]>([]);
@@ -102,6 +116,35 @@ export default function AICalculator() {
       if (inputs.outputTypes.includes('voice') && model.name === 'GPT-4o') score += 15;
       if (inputs.outputTypes.includes('vision') && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 15;
       
+      // Latency requirements
+      if (inputs.latencyNeeds === 'real-time' && model.strengths.includes('Ultra fast')) score += 20;
+      if (inputs.latencyNeeds === 'real-time' && model.name === 'GPT-4o Mini') score += 15;
+      if (inputs.latencyNeeds === 'batch' && model.name === 'Claude 3.5 Sonnet') score += 10;
+      
+      // Data compliance
+      if (inputs.dataCompliance === 'strict' && model.name === 'Claude 3.5 Sonnet') score += 15;
+      if (inputs.dataCompliance === 'none' && model.name === 'GPT-4o Mini') score += 10;
+      
+      // Context window needs
+      if (inputs.contextWindow === 'large' && model.strengths.includes('Large context')) score += 20;
+      if (inputs.contextWindow === 'large' && model.strengths.includes('Long context')) score += 25;
+      
+      // Usage patterns
+      if (inputs.usagePattern === 'burst' && model.name.includes('Mini')) score += 15;
+      if (inputs.usagePattern === 'steady' && model.name === 'Gemini 1.5 Pro') score += 10;
+      
+      // Revenue model considerations
+      if (inputs.revenueModel === 'free' && monthlyCost < 50) score += 20;
+      if (inputs.revenueModel === 'paid' && model.name === 'GPT-4o') score += 10;
+      
+      // Team size considerations
+      if (inputs.teamSize === 'solo' && model.strengths.includes('Fast')) score += 10;
+      if (inputs.teamSize === 'large' && model.name === 'Claude 3.5 Sonnet') score += 10;
+      
+      // Geographic considerations
+      if (inputs.primaryMarket === 'global' && model.name === 'GPT-4o') score += 10;
+      if (inputs.primaryMarket === 'us' && model.name.includes('GPT')) score += 5;
+      
       return { model, score: Math.min(100, score), monthlyCost };
     });
     
@@ -122,7 +165,14 @@ export default function AICalculator() {
       speedVsReasoning: 50,
       platforms: [],
       fineTune: '',
-      budgetConcern: ''
+      budgetConcern: '',
+      latencyNeeds: '',
+      dataCompliance: '',
+      contextWindow: '',
+      usagePattern: '',
+      primaryMarket: '',
+      teamSize: '',
+      revenueModel: ''
     });
   };
 
@@ -217,6 +267,125 @@ export default function AICalculator() {
                   <div className="text-sm text-muted-foreground">
                     ~{Math.round(inputs.tokensPerSession * 0.75)} words per conversation
                   </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Critical Business Factors */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Business Considerations</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Latency requirements?</Label>
+                    <Select value={inputs.latencyNeeds} onValueChange={(value) => setInputs(prev => ({...prev, latencyNeeds: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Response speed needs" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="real-time">Real-time (&lt;200ms)</SelectItem>
+                        <SelectItem value="fast">Fast (&lt;1s)</SelectItem>
+                        <SelectItem value="acceptable">Acceptable (&lt;3s)</SelectItem>
+                        <SelectItem value="batch">Batch processing OK</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Data compliance needs?</Label>
+                    <Select value={inputs.dataCompliance} onValueChange={(value) => setInputs(prev => ({...prev, dataCompliance: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Privacy requirements" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">No special requirements</SelectItem>
+                        <SelectItem value="gdpr">GDPR compliance</SelectItem>
+                        <SelectItem value="strict">Strict (on-premise preferred)</SelectItem>
+                        <SelectItem value="healthcare">Healthcare (HIPAA)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Context window needs?</Label>
+                    <Select value={inputs.contextWindow} onValueChange={(value) => setInputs(prev => ({...prev, contextWindow: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Conversation length" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="small">Short conversations</SelectItem>
+                        <SelectItem value="medium">Medium (few pages)</SelectItem>
+                        <SelectItem value="large">Large documents</SelectItem>
+                        <SelectItem value="massive">Massive (books/codebases)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Usage pattern?</Label>
+                    <Select value={inputs.usagePattern} onValueChange={(value) => setInputs(prev => ({...prev, usagePattern: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Traffic pattern" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="steady">Steady throughout day</SelectItem>
+                        <SelectItem value="burst">Burst/peak usage</SelectItem>
+                        <SelectItem value="scheduled">Scheduled batches</SelectItem>
+                        <SelectItem value="unknown">Unknown/just starting</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Primary market?</Label>
+                    <Select value={inputs.primaryMarket} onValueChange={(value) => setInputs(prev => ({...prev, primaryMarket: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Geographic focus" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="us">United States</SelectItem>
+                        <SelectItem value="europe">Europe</SelectItem>
+                        <SelectItem value="asia">Asia-Pacific</SelectItem>
+                        <SelectItem value="global">Global</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Team size?</Label>
+                    <Select value={inputs.teamSize} onValueChange={(value) => setInputs(prev => ({...prev, teamSize: value}))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Development team" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="solo">Solo founder</SelectItem>
+                        <SelectItem value="small">Small team (2-5)</SelectItem>
+                        <SelectItem value="medium">Medium team (6-15)</SelectItem>
+                        <SelectItem value="large">Large team (15+)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Revenue model?</Label>
+                  <Select value={inputs.revenueModel} onValueChange={(value) => setInputs(prev => ({...prev, revenueModel: value}))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="How do you monetize?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="free">Free app (ad-supported)</SelectItem>
+                      <SelectItem value="freemium">Freemium model</SelectItem>
+                      <SelectItem value="paid">Paid app/subscription</SelectItem>
+                      <SelectItem value="b2b">B2B/Enterprise</SelectItem>
+                      <SelectItem value="unknown">Still figuring out</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
