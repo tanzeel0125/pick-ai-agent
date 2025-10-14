@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp, Mail, MessageCircle } from 'lucide-react';
+import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp } from 'lucide-react';
 interface CalculatorInputs {
   monthlyUsers: number;
   sessionsPerDay: number;
@@ -183,7 +183,7 @@ export default function AICalculator() {
       {/* Hero Section */}
       <div className="gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-        <div className="container mx-auto px-4 py-16 relative">
+        <div className="container mx-auto px-4 py-16 relative bg-gray-900">
           <div className="text-center text-white">
             <div className="inline-flex items-center gap-2 mb-6">
               <Calculator className="w-8 h-8" />
@@ -198,11 +198,11 @@ export default function AICalculator() {
 
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Calculator Form - Black Background */}
-          <Card className="shadow-card bg-black border-tech-green/20">
+          {/* Calculator Form */}
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-tech-green" />
+                <TrendingUp className="w-5 h-5 text-tech-purple" />
                 Tell us about your app
               </CardTitle>
               <CardDescription>
@@ -478,8 +478,8 @@ export default function AICalculator() {
             </CardContent>
           </Card>
 
-          {/* Results - Grayish Background */}
-          <Card className="shadow-card bg-neutral-800/50 border-neutral-700">
+          {/* Results */}
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-tech-blue" />
@@ -491,7 +491,7 @@ export default function AICalculator() {
             </CardHeader>
             <CardContent>
               {recommendations.length > 0 ? <div className="space-y-4">
-                  {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
+                  {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-purple' : ''}`}>
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-3">
@@ -508,7 +508,7 @@ export default function AICalculator() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-2xl font-bold text-tech-green">
+                            <div className="text-2xl font-bold text-tech-purple">
                               ${rec.monthlyCost.toFixed(0)}
                             </div>
                             <div className="text-sm text-muted-foreground">per month</div>
@@ -543,42 +543,6 @@ export default function AICalculator() {
                 </div>}
             </CardContent>
           </Card>
-        </div>
-      </div>
-
-      {/* CTA Banner */}
-      <div className="bg-tech-green py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-              Get a FREE quote to build your AI App
-            </h2>
-            <p className="text-black/80 text-lg mb-8">
-              Let our experts help you bring your AI vision to life
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
-              >
-                <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Contact Now
-                </a>
-              </Button>
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
-              >
-                <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </div>;
