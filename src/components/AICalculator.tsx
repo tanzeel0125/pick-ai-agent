@@ -607,7 +607,7 @@ export default function AICalculator() {
             <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               {/* Peek Preview - Always Visible */}
               <div 
-                className={`bg-[#3F3F46] border-t-2 border-gray-600 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
+                className={`bg-[#333333] border-t-2 border-gray-600 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
                   hasUserInput() && !drawerOpen 
                     ? 'translate-y-0 animate-bounce-gentle' 
                     : !hasUserInput()
@@ -633,7 +633,7 @@ export default function AICalculator() {
                       </div>
                       
                       {/* Mini Preview of Top Recommendation */}
-                      <div className="flex items-center gap-3 p-3 bg-[#333333] rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3 p-3 bg-[#111111] rounded-lg border border-gray-700">
                         <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
                           {recommendations[0].model.icon}
                         </div>
@@ -668,7 +668,7 @@ export default function AICalculator() {
               </div>
 
               {/* Full Drawer Content */}
-              <DrawerContent className="max-h-[85vh] bg-[#3F3F46] border-gray-600">
+              <DrawerContent className="max-h-[85vh] bg-[#333333] border-gray-600">
                 <DrawerHeader>
                   <DrawerTitle className="flex items-center gap-2 text-white">
                     <Zap className="w-5 h-5 text-tech-blue" />
@@ -680,7 +680,7 @@ export default function AICalculator() {
                 </DrawerHeader>
                 <div className="px-4 pb-6 overflow-y-auto">
                   {recommendations.length > 0 ? <div className="space-y-4">
-                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-[#333333] border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
+                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-[#111111] border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex items-center gap-3">
@@ -717,7 +717,7 @@ export default function AICalculator() {
                           </CardContent>
                         </Card>)}
                       
-                      <div className="mt-6 p-4 bg-[#333333] border border-gray-700 rounded-lg">
+                      <div className="mt-6 p-4 bg-[#111111] border border-gray-700 rounded-lg">
                         <h4 className="font-semibold mb-2 text-white">💡 Pro Tips</h4>
                         <ul className="text-sm text-gray-300 space-y-1">
                           <li>• Start with the recommended model and test with real usage</li>
