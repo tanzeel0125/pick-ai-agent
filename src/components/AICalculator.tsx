@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp } from 'lucide-react';
+import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp, Mail, MessageCircle } from 'lucide-react';
 interface CalculatorInputs {
   monthlyUsers: number;
   sessionsPerDay: number;
@@ -198,8 +198,8 @@ export default function AICalculator() {
 
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Calculator Form */}
-          <Card className="shadow-card">
+          {/* Calculator Form - Black Background */}
+          <Card className="shadow-card bg-black border-tech-green/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-tech-purple" />
@@ -478,8 +478,8 @@ export default function AICalculator() {
             </CardContent>
           </Card>
 
-          {/* Results */}
-          <Card className="shadow-card">
+          {/* Results - Grayish Background */}
+          <Card className="shadow-card bg-neutral-800/50 border-neutral-700">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-tech-blue" />
@@ -543,6 +543,42 @@ export default function AICalculator() {
                 </div>}
             </CardContent>
           </Card>
+        </div>
+      </div>
+
+      {/* CTA Banner */}
+      <div className="bg-tech-green py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+              Get a FREE quote to build your AI App
+            </h2>
+            <p className="text-black/80 text-lg mb-8">
+              Let our experts help you bring your AI vision to life
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
+              >
+                <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
+                  <Mail className="w-5 h-5 mr-2" />
+                  Contact Now
+                </a>
+              </Button>
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
+              >
+                <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  WhatsApp
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>;

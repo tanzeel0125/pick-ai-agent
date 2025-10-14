@@ -34,17 +34,20 @@
     --input: 240 3.7% 15.9%;
     --ring: 262 83% 58%;
 
-    /* AI Calculator specific tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(213 93% 68%));
-    --gradient-secondary: linear-gradient(135deg, hsl(240 3.7% 15.9%), hsl(240 5% 26%));
-    --gradient-accent: linear-gradient(135deg, hsl(262 83% 58% / 0.1), hsl(213 93% 68% / 0.1));
+    /* Techpacity Brand Colors */
+    --techpacity-green: 145 100% 47%;  /* #00EE60 */
+    --techpacity-black: 0 0% 0%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(145 100% 47%), hsl(145 100% 37%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 10%), hsl(0 0% 5%));
+    --gradient-accent: linear-gradient(135deg, hsl(145 100% 47% / 0.1), hsl(145 100% 37% / 0.1));
     
     --tech-purple: 262 83% 58%;
     --tech-blue: 213 93% 68%;
-    --tech-green: 142 76% 36%;
+    --tech-green: 145 100% 47%;  /* Techpacity green */
     --tech-orange: 25 95% 53%;
     
-    --shadow-glow: 0 0 40px hsl(262 83% 58% / 0.3);
+    --shadow-glow: 0 0 40px hsl(145 100% 47% / 0.3);
     --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -97,7 +100,7 @@
     --input: 240 5.9% 90%;
     --ring: 262 83% 58%;
 
-    --shadow-glow: 0 0 40px hsl(262 83% 58% / 0.2);
+    --shadow-glow: 0 0 40px hsl(145 100% 47% / 0.2);
     --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.1);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
