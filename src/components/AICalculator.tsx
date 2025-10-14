@@ -655,7 +655,7 @@ export default function AICalculator() {
 
               {/* Full Drawer Content */}
               <DrawerContent className="max-h-[85vh] bg-[#333333] border-gray-600">
-                <DrawerHeader className="bg-neutral-800">
+                <DrawerHeader className="bg-neutral-900">
                   <DrawerTitle className="flex items-center gap-2 text-white">
                     <Zap className="w-5 h-5 text-tech-blue" />
                     AI Model Recommendations
@@ -664,7 +664,7 @@ export default function AICalculator() {
                     Based on your inputs, here are the best AI models for your startup
                   </DrawerDescription>
                 </DrawerHeader>
-                <div className="px-4 pb-6 overflow-y-auto bg-neutral-800">
+                <div className="px-4 pb-6 overflow-y-auto bg-neutral-900">
                   {recommendations.length > 0 ? <div className="space-y-4">
                       {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-[#111111] border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                           <CardContent className="p-4 bg-neutral-900">
