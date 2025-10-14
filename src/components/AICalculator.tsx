@@ -681,24 +681,16 @@ export default function AICalculator() {
       </div>
 
       {/* CTA Banner */}
-      <div className="bg-tech-green py-4 lg:py-6 mb-40 lg:mb-0">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
-            <h2 className="text-xl md:text-2xl font-bold text-black text-center lg:text-left">Need help to build your app?</h2>
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-3 justify-center lg:justify-end flex-shrink-0">
-              <Button asChild size="sm" className="bg-black hover:bg-black/90 text-tech-green font-semibold px-5 w-full sm:w-auto">
-                <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Contact Now
-                </a>
-              </Button>
-              <Button asChild size="sm" className="bg-black hover:bg-black/90 text-tech-green font-semibold px-5 w-full sm:w-auto">
-                <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
+      <div className="bg-white py-6 lg:py-8 mb-40 lg:mb-0">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="flex flex-col items-center gap-4">
+            <h2 className="text-xl md:text-2xl font-bold text-black text-center">Need help to build your app?</h2>
+            <Button asChild size="lg" className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold px-8 py-6 rounded-full w-full max-w-md h-auto">
+              <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
+                <MessageCircle className="w-6 h-6" />
+                <span className="text-lg">Let's Chat on WhatsApp</span>
+              </a>
+            </Button>
           </div>
         </div>
       </div>
