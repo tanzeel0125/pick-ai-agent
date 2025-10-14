@@ -181,7 +181,7 @@ export default function AICalculator() {
   };
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="gradient-primary relative overflow-hidden">
+      <div className="relative overflow-hidden" style={{ backgroundColor: '#7C3CEC' }}>
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="container mx-auto px-4 py-16 relative">
           <div className="text-center text-white">
