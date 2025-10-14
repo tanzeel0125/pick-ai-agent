@@ -158,7 +158,6 @@ export default function AICalculator() {
   useEffect(() => {
     calculateRecommendations();
   }, [inputs]);
-
   useEffect(() => {
     if (hasUserInput() && recommendations.length > 0 && !hasSeenResults) {
       setHasSeenResults(true);
@@ -606,25 +605,15 @@ export default function AICalculator() {
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50">
             <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               {/* Peek Preview - Always Visible */}
-              <div 
-                className={`bg-[#333333] border-t-2 border-gray-600 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
-                  hasUserInput() && !drawerOpen 
-                    ? 'translate-y-0 animate-bounce-gentle' 
-                    : !hasUserInput()
-                    ? 'translate-y-[calc(100%-60px)]'
-                    : 'translate-y-0'
-                }`}
-                onClick={() => hasUserInput() && setDrawerOpen(true)}
-              >
+              <div className={`bg-[#333333] border-t-2 border-gray-600 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${hasUserInput() && !drawerOpen ? 'translate-y-0 animate-bounce-gentle' : !hasUserInput() ? 'translate-y-[calc(100%-60px)]' : 'translate-y-0'}`} onClick={() => hasUserInput() && setDrawerOpen(true)}>
                 {/* Drag Handle */}
-                <div className="flex justify-center pt-3 pb-2">
+                <div className="flex justify-center pt-3 pb-2 bg-neutral-900">
                   <div className="w-12 h-1.5 bg-gray-500 rounded-full" />
                 </div>
                 
                 {/* Peek Content */}
-                <div className="px-4 pb-4">
-                  {hasUserInput() && recommendations.length > 0 ? (
-                    <>
+                <div className="px-4 pb-4 bg-neutral-900">
+                  {hasUserInput() && recommendations.length > 0 ? <>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium text-gray-300">
                           {recommendations.length} AI Models Found
@@ -633,7 +622,7 @@ export default function AICalculator() {
                       </div>
                       
                       {/* Mini Preview of Top Recommendation */}
-                      <div className="flex items-center gap-3 p-3 bg-[#111111] rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-700 bg-neutral-900">
                         <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
                           {recommendations[0].model.icon}
                         </div>
@@ -656,14 +645,11 @@ export default function AICalculator() {
                       <p className="text-xs text-center text-gray-300 mt-3">
                         👆 Tap or drag up to view all recommendations
                       </p>
-                    </>
-                  ) : (
-                    <div className="text-center py-2">
+                    </> : <div className="text-center py-2">
                       <p className="text-sm text-gray-300">
                         Fill the form to see AI recommendations
                       </p>
-                    </div>
-                  )}
+                    </div>}
                 </div>
               </div>
 
