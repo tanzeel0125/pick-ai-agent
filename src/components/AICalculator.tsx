@@ -20,8 +20,6 @@ interface CalculatorInputs {
   outputTypes: string[];
   speedVsReasoning: number;
   platforms: string[];
-  fineTune: string;
-  budgetConcern: string;
   latencyNeeds: string;
   dataCompliance: string;
   contextWindow: string;
@@ -71,8 +69,6 @@ export default function AICalculator() {
     outputTypes: [],
     speedVsReasoning: 0,
     platforms: [],
-    fineTune: '',
-    budgetConcern: '',
     latencyNeeds: '',
     dataCompliance: '',
     contextWindow: '',
@@ -89,7 +85,7 @@ export default function AICalculator() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [hasSeenResults, setHasSeenResults] = useState(false);
   const hasUserInput = () => {
-    return inputs.monthlyUsers > 0 || inputs.sessionsPerDay > 0 || inputs.tokensPerSession > 0 || inputs.appType !== '' || inputs.outputTypes.length > 0 || inputs.speedVsReasoning > 0 || inputs.fineTune !== '' || inputs.budgetConcern !== '' || inputs.latencyNeeds !== '' || inputs.dataCompliance !== '' || inputs.contextWindow !== '' || inputs.usagePattern !== '' || inputs.primaryMarket !== '' || inputs.teamSize !== '' || inputs.revenueModel !== '';
+    return inputs.monthlyUsers > 0 || inputs.sessionsPerDay > 0 || inputs.tokensPerSession > 0 || inputs.appType !== '' || inputs.outputTypes.length > 0 || inputs.speedVsReasoning > 0 || inputs.latencyNeeds !== '' || inputs.dataCompliance !== '' || inputs.contextWindow !== '' || inputs.usagePattern !== '' || inputs.primaryMarket !== '' || inputs.teamSize !== '' || inputs.revenueModel !== '';
   };
   const calculateRecommendations = () => {
     if (!hasUserInput()) {
@@ -111,13 +107,12 @@ export default function AICalculator() {
       if (inputs.speedVsReasoning < 30 && model.strengths.includes('Fast')) score += 20;
       if (inputs.speedVsReasoning > 70 && model.strengths.includes('Reasoning')) score += 25;
 
-      // Budget concerns
-      if (inputs.budgetConcern === 'yes' && monthlyCost < 100) score += 15;
-      if (inputs.budgetConcern === 'yes' && model.name.includes('Mini')) score += 20;
-
-      // Output types
-      if (inputs.outputTypes.includes('voice') && model.name === 'GPT-4o') score += 15;
-      if (inputs.outputTypes.includes('vision') && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 15;
+      // Output types - Enhanced impact
+      if (inputs.outputTypes.includes('voice') && model.name === 'GPT-4o') score += 25;
+      if (inputs.outputTypes.includes('vision') && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 25;
+      if (inputs.outputTypes.includes('text') && model.name.includes('Claude')) score += 20;
+      if (inputs.outputTypes.includes('code') && model.name === 'Claude 3.5 Sonnet') score += 30;
+      if (inputs.outputTypes.includes('code') && model.name === 'GPT-4o') score += 15;
 
       // Latency requirements
       if (inputs.latencyNeeds === 'real-time' && model.strengths.includes('Ultra fast')) score += 20;
@@ -172,8 +167,6 @@ export default function AICalculator() {
       outputTypes: [],
       speedVsReasoning: 0,
       platforms: [],
-      fineTune: '',
-      budgetConcern: '',
       latencyNeeds: '',
       dataCompliance: '',
       contextWindow: '',
@@ -492,41 +485,6 @@ export default function AICalculator() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <Label>Plan to fine-tune?</Label>
-                    <RadioGroup value={inputs.fineTune} onValueChange={value => setInputs(prev => ({
-                      ...prev,
-                      fineTune: value
-                    }))}>
-                      <div className="flex items-center space-x-2 h-11 md:h-auto">
-                        <RadioGroupItem value="yes" id="finetune-yes" className="h-5 w-5" />
-                        <Label htmlFor="finetune-yes" className="cursor-pointer">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2 h-11 md:h-auto">
-                        <RadioGroupItem value="no" id="finetune-no" className="h-5 w-5" />
-                        <Label htmlFor="finetune-no" className="cursor-pointer">No</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label>Budget is tight?</Label>
-                    <RadioGroup value={inputs.budgetConcern} onValueChange={value => setInputs(prev => ({
-                      ...prev,
-                      budgetConcern: value
-                    }))}>
-                      <div className="flex items-center space-x-2 h-11 md:h-auto">
-                        <RadioGroupItem value="yes" id="budget-yes" className="h-5 w-5" />
-                        <Label htmlFor="budget-yes" className="cursor-pointer">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2 h-11 md:h-auto">
-                        <RadioGroupItem value="no" id="budget-no" className="h-5 w-5" />
-                        <Label htmlFor="budget-no" className="cursor-pointer">No</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
-                </div>
               </div>
 
               <Button onClick={resetCalculator} variant="outline" className="w-full h-11 md:h-10">
