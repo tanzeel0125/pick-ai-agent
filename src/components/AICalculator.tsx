@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp } from 'lucide-react';
+import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp, Mail, MessageCircle } from 'lucide-react';
 interface CalculatorInputs {
   monthlyUsers: number;
   sessionsPerDay: number;
@@ -543,6 +543,37 @@ export default function AICalculator() {
                 </div>}
             </CardContent>
           </Card>
+        </div>
+
+        {/* Mini CTA Banner */}
+        <div className="mt-8 rounded-lg p-4" style={{ backgroundColor: '#312E81' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-white text-sm font-medium">
+              Get a FREE quote to build your AI App
+            </p>
+            <div className="flex gap-3">
+              <Button
+                asChild
+                size="sm"
+                className="bg-tech-green text-black hover:bg-tech-green/90"
+              >
+                <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
+                  <Mail className="w-4 h-4" />
+                  Contact Now
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="sm"
+                className="bg-tech-green text-black hover:bg-tech-green/90"
+              >
+                <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-4 h-4" />
+                  WhatsApp
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>;
