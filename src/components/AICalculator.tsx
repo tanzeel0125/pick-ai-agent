@@ -210,10 +210,10 @@ export default function AICalculator() {
         backgroundColor: '#7C3CEC'
       }}>
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-          <div className="container mx-auto px-4 py-8 relative">
+          <div className="container mx-auto px-4 py-6 relative">
             <div className="text-center text-white">
-              <h1 className="md:text-5xl font-bold text-3xl mb-3">Pick the Right AI Agent</h1>
-              <p className="md:text-xl text-white/90 max-w-2xl text-sm mx-auto">Get cost estimates based on your needs.</p>
+              <h1 className="md:text-4xl font-bold text-2xl mb-2">Pick the Right AI Agent</h1>
+              <p className="md:text-lg text-white/90 max-w-2xl text-sm mx-auto">Get cost estimates based on your needs.</p>
             </div>
           </div>
         </div>
