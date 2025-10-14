@@ -607,7 +607,7 @@ export default function AICalculator() {
             <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               {/* Peek Preview - Always Visible */}
               <div 
-                className={`bg-gray-100 border-t-2 border-gray-300 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
+                className={`bg-[#3F3F46] border-t-2 border-gray-600 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
                   hasUserInput() && !drawerOpen 
                     ? 'translate-y-0 animate-bounce-gentle' 
                     : !hasUserInput()
@@ -618,7 +618,7 @@ export default function AICalculator() {
               >
                 {/* Drag Handle */}
                 <div className="flex justify-center pt-3 pb-2">
-                  <div className="w-12 h-1.5 bg-gray-400 rounded-full" />
+                  <div className="w-12 h-1.5 bg-gray-500 rounded-full" />
                 </div>
                 
                 {/* Peek Content */}
@@ -626,22 +626,22 @@ export default function AICalculator() {
                   {hasUserInput() && recommendations.length > 0 ? (
                     <>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-gray-300">
                           {recommendations.length} AI Models Found
                         </span>
                         <ChevronUp className="w-5 h-5 text-tech-blue animate-bounce" />
                       </div>
                       
                       {/* Mini Preview of Top Recommendation */}
-                      <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-tech-green/30">
+                      <div className="flex items-center gap-3 p-3 bg-black rounded-lg border border-gray-700">
                         <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
                           {recommendations[0].model.icon}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm truncate text-gray-900">
+                          <div className="font-semibold text-sm truncate text-white">
                             🏆 {recommendations[0].model.name}
                           </div>
-                          <div className="text-xs text-gray-600">
+                          <div className="text-xs text-gray-300">
                             Best match for your needs
                           </div>
                         </div>
@@ -649,17 +649,17 @@ export default function AICalculator() {
                           <div className="text-lg font-bold text-tech-green">
                             ${recommendations[0].monthlyCost.toFixed(0)}
                           </div>
-                          <div className="text-xs text-gray-600">per month</div>
+                          <div className="text-xs text-gray-300">per month</div>
                         </div>
                       </div>
                       
-                      <p className="text-xs text-center text-gray-600 mt-3">
+                      <p className="text-xs text-center text-gray-300 mt-3">
                         👆 Tap or drag up to view all recommendations
                       </p>
                     </>
                   ) : (
                     <div className="text-center py-2">
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-300">
                         Fill the form to see AI recommendations
                       </p>
                     </div>
@@ -668,19 +668,19 @@ export default function AICalculator() {
               </div>
 
               {/* Full Drawer Content */}
-              <DrawerContent className="max-h-[85vh] bg-gray-100 border-gray-300">
+              <DrawerContent className="max-h-[85vh] bg-[#3F3F46] border-gray-600">
                 <DrawerHeader>
-                  <DrawerTitle className="flex items-center gap-2 text-gray-900">
+                  <DrawerTitle className="flex items-center gap-2 text-white">
                     <Zap className="w-5 h-5 text-tech-blue" />
                     AI Model Recommendations
                   </DrawerTitle>
-                  <DrawerDescription className="text-gray-600">
+                  <DrawerDescription className="text-gray-300">
                     Based on your inputs, here are the best AI models for your startup
                   </DrawerDescription>
                 </DrawerHeader>
                 <div className="px-4 pb-6 overflow-y-auto">
                   {recommendations.length > 0 ? <div className="space-y-4">
-                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
+                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-black border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex items-center gap-3">
@@ -688,7 +688,7 @@ export default function AICalculator() {
                                   {rec.model.icon}
                                 </div>
                                 <div>
-                                  <h4 className="font-semibold text-lg text-gray-900">{rec.model.name}</h4>
+                                  <h4 className="font-semibold text-lg text-white">{rec.model.name}</h4>
                                   <div className="flex items-center gap-2 mt-1">
                                     <Badge variant={index === 0 ? "default" : "secondary"}>
                                       {index === 0 ? "🏆 Best Match" : `${rec.score}% match`}
@@ -700,7 +700,7 @@ export default function AICalculator() {
                                 <div className="text-2xl font-bold text-tech-green">
                                   ${rec.monthlyCost.toFixed(0)}
                                 </div>
-                                <div className="text-sm text-gray-600">per month</div>
+                                <div className="text-sm text-gray-300">per month</div>
                               </div>
                             </div>
                             
@@ -710,23 +710,23 @@ export default function AICalculator() {
                                 </Badge>)}
                             </div>
                             
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-gray-300">
                               ~{(inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30 / 1000000).toFixed(1)}M tokens/month
                               • ${(rec.model.costPer1kTokens * 1000).toFixed(2)} per 1M tokens
                             </div>
                           </CardContent>
                         </Card>)}
                       
-                      <div className="mt-6 p-4 bg-white rounded-lg">
-                        <h4 className="font-semibold mb-2 text-gray-900">💡 Pro Tips</h4>
-                        <ul className="text-sm text-gray-700 space-y-1">
+                      <div className="mt-6 p-4 bg-black border border-gray-700 rounded-lg">
+                        <h4 className="font-semibold mb-2 text-white">💡 Pro Tips</h4>
+                        <ul className="text-sm text-gray-300 space-y-1">
                           <li>• Start with the recommended model and test with real usage</li>
                           <li>• Consider using different models for different features</li>
                           <li>• Monitor actual token usage - estimates can vary ±30%</li>
                           <li>• Most providers offer volume discounts for high usage</li>
                         </ul>
                       </div>
-                    </div> : <div className="text-center py-16 text-gray-600">
+                    </div> : <div className="text-center py-16 text-gray-300">
                       <p className="text-xl font-bold">Once you enter your app details, recommended AI Agents will show here</p>
                     </div>}
                 </div>
