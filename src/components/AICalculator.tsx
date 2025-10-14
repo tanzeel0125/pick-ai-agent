@@ -654,7 +654,7 @@ export default function AICalculator() {
               </div>
 
               {/* Full Drawer Content */}
-              <DrawerContent className="max-h-[85vh] bg-[#333333] border-gray-600">
+              <DrawerContent className="max-h-[85vh] bg-[#171717] border-gray-600">
                 <DrawerHeader className="bg-neutral-900">
                   <DrawerTitle className="flex items-center gap-2 text-white">
                     <Zap className="w-5 h-5 text-tech-blue" />
