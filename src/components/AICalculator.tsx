@@ -633,7 +633,7 @@ export default function AICalculator() {
                       </div>
                       
                       {/* Mini Preview of Top Recommendation */}
-                      <div className="flex items-center gap-3 p-3 bg-black rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3 p-3 bg-[#333333] rounded-lg border border-gray-700">
                         <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
                           {recommendations[0].model.icon}
                         </div>
@@ -680,7 +680,7 @@ export default function AICalculator() {
                 </DrawerHeader>
                 <div className="px-4 pb-6 overflow-y-auto">
                   {recommendations.length > 0 ? <div className="space-y-4">
-                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-black border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
+                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg bg-[#333333] border-gray-700 ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex items-center gap-3">
@@ -717,7 +717,7 @@ export default function AICalculator() {
                           </CardContent>
                         </Card>)}
                       
-                      <div className="mt-6 p-4 bg-black border border-gray-700 rounded-lg">
+                      <div className="mt-6 p-4 bg-[#333333] border border-gray-700 rounded-lg">
                         <h4 className="font-semibold mb-2 text-white">💡 Pro Tips</h4>
                         <ul className="text-sm text-gray-300 space-y-1">
                           <li>• Start with the recommended model and test with real usage</li>
