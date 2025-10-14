@@ -87,29 +87,13 @@ export default function AICalculator() {
     monthlyCost: number;
   }[]>([]);
   const hasUserInput = () => {
-    return inputs.monthlyUsers > 0 || 
-           inputs.sessionsPerDay > 0 || 
-           inputs.tokensPerSession > 0 ||
-           inputs.appType !== '' ||
-           inputs.outputTypes.length > 0 ||
-           inputs.speedVsReasoning > 0 ||
-           inputs.fineTune !== '' ||
-           inputs.budgetConcern !== '' ||
-           inputs.latencyNeeds !== '' ||
-           inputs.dataCompliance !== '' ||
-           inputs.contextWindow !== '' ||
-           inputs.usagePattern !== '' ||
-           inputs.primaryMarket !== '' ||
-           inputs.teamSize !== '' ||
-           inputs.revenueModel !== '';
+    return inputs.monthlyUsers > 0 || inputs.sessionsPerDay > 0 || inputs.tokensPerSession > 0 || inputs.appType !== '' || inputs.outputTypes.length > 0 || inputs.speedVsReasoning > 0 || inputs.fineTune !== '' || inputs.budgetConcern !== '' || inputs.latencyNeeds !== '' || inputs.dataCompliance !== '' || inputs.contextWindow !== '' || inputs.usagePattern !== '' || inputs.primaryMarket !== '' || inputs.teamSize !== '' || inputs.revenueModel !== '';
   };
-
   const calculateRecommendations = () => {
     if (!hasUserInput()) {
       setRecommendations([]);
       return;
     }
-
     const totalTokensPerMonth = inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30;
     const modelScores = aiModels.map(model => {
       let score = 50; // Base score
@@ -219,21 +203,20 @@ export default function AICalculator() {
     }
     return '';
   };
-
   return <TooltipProvider>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <div className="relative overflow-hidden" style={{ backgroundColor: '#7C3CEC' }}>
+        <div className="relative overflow-hidden" style={{
+        backgroundColor: '#7C3CEC'
+      }}>
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
           <div className="container mx-auto px-4 py-16 relative">
             <div className="text-center text-white">
               <div className="inline-flex items-center gap-2 mb-6">
-                <Calculator className="w-8 h-8" />
+                
                 <h1 className="text-4xl md:text-6xl font-bold">Pick the Right AI Agent</h1>
               </div>
-              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-                Find the perfect AI model for your startup. Get cost estimates and recommendations based on your specific needs.
-              </p>
+              <p className="md:text-2xl text-white/90 max-w-3xl mx-auto text-base">Get cost estimates and recommendations based on your specific needs.</p>
             </div>
           </div>
         </div>
@@ -259,38 +242,20 @@ export default function AICalculator() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="monthlyUsers">Expected Monthly Users</Label>
-                    <Input 
-                      id="monthlyUsers" 
-                      type="number" 
-                      value={inputs.monthlyUsers} 
-                      onChange={e => setInputs(prev => ({
-                        ...prev,
-                        monthlyUsers: parseInt(e.target.value) || 0
-                      }))} 
-                      placeholder="e.g., 10,000"
-                      className="h-11 md:h-10"
-                    />
-                    {getValidationHint('monthlyUsers', inputs.monthlyUsers) && (
-                      <p className="text-xs text-muted-foreground">{getValidationHint('monthlyUsers', inputs.monthlyUsers)}</p>
-                    )}
+                    <Input id="monthlyUsers" type="number" value={inputs.monthlyUsers} onChange={e => setInputs(prev => ({
+                      ...prev,
+                      monthlyUsers: parseInt(e.target.value) || 0
+                    }))} placeholder="e.g., 10,000" className="h-11 md:h-10" />
+                    {getValidationHint('monthlyUsers', inputs.monthlyUsers) && <p className="text-xs text-muted-foreground">{getValidationHint('monthlyUsers', inputs.monthlyUsers)}</p>}
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="sessionsPerDay">Sessions per User/Day</Label>
-                    <Input 
-                      id="sessionsPerDay" 
-                      type="number" 
-                      value={inputs.sessionsPerDay} 
-                      onChange={e => setInputs(prev => ({
-                        ...prev,
-                        sessionsPerDay: parseInt(e.target.value) || 0
-                      }))} 
-                      placeholder="e.g., 3"
-                      className="h-11 md:h-10"
-                    />
-                    {getValidationHint('sessionsPerDay', inputs.sessionsPerDay) && (
-                      <p className="text-xs text-muted-foreground">{getValidationHint('sessionsPerDay', inputs.sessionsPerDay)}</p>
-                    )}
+                    <Input id="sessionsPerDay" type="number" value={inputs.sessionsPerDay} onChange={e => setInputs(prev => ({
+                      ...prev,
+                      sessionsPerDay: parseInt(e.target.value) || 0
+                    }))} placeholder="e.g., 3" className="h-11 md:h-10" />
+                    {getValidationHint('sessionsPerDay', inputs.sessionsPerDay) && <p className="text-xs text-muted-foreground">{getValidationHint('sessionsPerDay', inputs.sessionsPerDay)}</p>}
                   </div>
                 </div>
 
@@ -299,17 +264,10 @@ export default function AICalculator() {
                     <Label>Tokens per Session</Label>
                     <span className="text-sm font-semibold text-primary">{inputs.tokensPerSession.toLocaleString()}</span>
                   </div>
-                  <Slider 
-                    value={[inputs.tokensPerSession]} 
-                    onValueChange={value => setInputs(prev => ({
-                      ...prev,
-                      tokensPerSession: value[0]
-                    }))} 
-                    max={5000} 
-                    min={0} 
-                    step={100} 
-                    className="w-full"
-                  />
+                  <Slider value={[inputs.tokensPerSession]} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    tokensPerSession: value[0]
+                  }))} max={5000} min={0} step={100} className="w-full" />
                   <div className="text-xs text-muted-foreground">
                     ~{Math.round(inputs.tokensPerSession * 0.75)} words per conversation
                   </div>
@@ -459,9 +417,9 @@ export default function AICalculator() {
                 <div className="space-y-2">
                   <Label>Revenue model?</Label>
                   <Select value={inputs.revenueModel} onValueChange={value => setInputs(prev => ({
-                  ...prev,
-                  revenueModel: value
-                }))}>
+                    ...prev,
+                    revenueModel: value
+                  }))}>
                     <SelectTrigger>
                       <SelectValue placeholder="How do you monetize?" />
                     </SelectTrigger>
@@ -505,17 +463,10 @@ export default function AICalculator() {
                 <div className="space-y-3">
                   <Label>AI capabilities needed:</Label>
                   <div className="grid grid-cols-2 gap-4">
-                    {['text', 'voice', 'vision', 'code'].map(type => (
-                      <div key={type} className="flex items-center space-x-2">
-                        <Checkbox 
-                          id={type} 
-                          checked={inputs.outputTypes.includes(type)} 
-                          onCheckedChange={checked => handleOutputTypeChange(type, !!checked)}
-                          className="h-5 w-5"
-                        />
+                    {['text', 'voice', 'vision', 'code'].map(type => <div key={type} className="flex items-center space-x-2">
+                        <Checkbox id={type} checked={inputs.outputTypes.includes(type)} onCheckedChange={checked => handleOutputTypeChange(type, !!checked)} className="h-5 w-5" />
                         <Label htmlFor={type} className="capitalize cursor-pointer">{type}</Label>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </div>
 
@@ -524,17 +475,10 @@ export default function AICalculator() {
                     <Label>Speed vs Deep Reasoning</Label>
                     <span className="text-sm font-semibold text-primary">{inputs.speedVsReasoning}%</span>
                   </div>
-                  <Slider 
-                    value={[inputs.speedVsReasoning]} 
-                    onValueChange={value => setInputs(prev => ({
-                      ...prev,
-                      speedVsReasoning: value[0]
-                    }))} 
-                    max={100} 
-                    min={0} 
-                    step={10} 
-                    className="w-full"
-                  />
+                  <Slider value={[inputs.speedVsReasoning]} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    speedVsReasoning: value[0]
+                  }))} max={100} min={0} step={10} className="w-full" />
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>⚡ Fastest</span>
                     <span>🧠 Deepest Reasoning</span>
@@ -654,10 +598,7 @@ export default function AICalculator() {
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50">
             <Drawer>
               <DrawerTrigger asChild>
-                <Button 
-                  className="w-full rounded-none h-14 text-base font-semibold"
-                  disabled={!hasUserInput()}
-                >
+                <Button className="w-full rounded-none h-14 text-base font-semibold" disabled={!hasUserInput()}>
                   {hasUserInput() ? `View ${recommendations.length} Recommendations` : 'Fill form to see results'}
                 </Button>
               </DrawerTrigger>
@@ -672,10 +613,8 @@ export default function AICalculator() {
                   </DrawerDescription>
                 </DrawerHeader>
                 <div className="px-4 pb-6 overflow-y-auto">
-                  {recommendations.length > 0 ? (
-                    <div className="space-y-4">
-                      {recommendations.map((rec, index) => (
-                        <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
+                  {recommendations.length > 0 ? <div className="space-y-4">
+                      {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex items-center gap-3">
@@ -700,11 +639,9 @@ export default function AICalculator() {
                             </div>
                             
                             <div className="flex flex-wrap gap-1 mb-3">
-                              {rec.model.strengths.map(strength => (
-                                <Badge key={strength} variant="outline" className="text-xs">
+                              {rec.model.strengths.map(strength => <Badge key={strength} variant="outline" className="text-xs">
                                   {strength}
-                                </Badge>
-                              ))}
+                                </Badge>)}
                             </div>
                             
                             <div className="text-sm text-muted-foreground">
@@ -712,8 +649,7 @@ export default function AICalculator() {
                               • ${(rec.model.costPer1kTokens * 1000).toFixed(2)} per 1M tokens
                             </div>
                           </CardContent>
-                        </Card>
-                      ))}
+                        </Card>)}
                       
                       <div className="mt-6 p-4 bg-muted/50 rounded-lg">
                         <h4 className="font-semibold mb-2">💡 Pro Tips</h4>
@@ -724,12 +660,9 @@ export default function AICalculator() {
                           <li>• Most providers offer volume discounts for high usage</li>
                         </ul>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="text-center py-16 text-muted-foreground">
+                    </div> : <div className="text-center py-16 text-muted-foreground">
                       <p className="text-xl font-bold">Once you enter your app details, recommended AI Agents will show here</p>
-                    </div>
-                  )}
+                    </div>}
                 </div>
               </DrawerContent>
             </Drawer>
@@ -748,21 +681,13 @@ export default function AICalculator() {
               Let our experts help you bring your AI vision to life
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
-              >
+              <Button asChild size="lg" className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8">
                 <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
                   <Mail className="w-5 h-5 mr-2" />
                   Contact Now
                 </a>
               </Button>
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8"
-              >
+              <Button asChild size="lg" className="bg-black hover:bg-black/90 text-tech-green font-semibold px-8">
                 <a href="https://wa.link/y9by8s" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp
