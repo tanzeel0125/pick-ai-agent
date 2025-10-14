@@ -187,7 +187,7 @@ export default function AICalculator() {
           <div className="text-center text-white">
             <div className="inline-flex items-center gap-2 mb-6">
               <Calculator className="w-8 h-8" />
-              <h1 className="text-4xl md:text-6xl font-bold">Choose the best AI Agent for your App</h1>
+              <h1 className="text-4xl md:text-6xl font-bold">Pick the Right AI Agent</h1>
             </div>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
               Find the perfect AI model for your startup. Get cost estimates and recommendations based on your specific needs.
