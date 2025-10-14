@@ -10,7 +10,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp } from 'lucide-react';
-
 interface CalculatorInputs {
   monthlyUsers: number;
   sessionsPerDay: number;
@@ -29,7 +28,6 @@ interface CalculatorInputs {
   teamSize: string;
   revenueModel: string;
 }
-
 interface AIModel {
   name: string;
   costPer1kTokens: number;
@@ -37,38 +35,31 @@ interface AIModel {
   color: string;
   icon: React.ReactNode;
 }
-
-const aiModels: AIModel[] = [
-  {
-    name: "GPT-4o",
-    costPer1kTokens: 0.005,
-    strengths: ["Fast", "Vision", "Voice", "Reliable"],
-    color: "tech-green",
-    icon: <Zap className="w-4 h-4" />
-  },
-  {
-    name: "Claude 3.5 Sonnet",
-    costPer1kTokens: 0.003,
-    strengths: ["Reasoning", "Code", "Long context"],
-    color: "tech-orange",
-    icon: <Brain className="w-4 h-4" />
-  },
-  {
-    name: "Gemini 1.5 Pro",
-    costPer1kTokens: 0.0025,
-    strengths: ["Multimodal", "Cost-effective", "Large context"],
-    color: "tech-blue",
-    icon: <Eye className="w-4 h-4" />
-  },
-  {
-    name: "GPT-4o Mini",
-    costPer1kTokens: 0.00015,
-    strengths: ["Ultra fast", "Cheap", "Good for simple tasks"],
-    color: "tech-purple",
-    icon: <MessageSquare className="w-4 h-4" />
-  }
-];
-
+const aiModels: AIModel[] = [{
+  name: "GPT-4o",
+  costPer1kTokens: 0.005,
+  strengths: ["Fast", "Vision", "Voice", "Reliable"],
+  color: "tech-green",
+  icon: <Zap className="w-4 h-4" />
+}, {
+  name: "Claude 3.5 Sonnet",
+  costPer1kTokens: 0.003,
+  strengths: ["Reasoning", "Code", "Long context"],
+  color: "tech-orange",
+  icon: <Brain className="w-4 h-4" />
+}, {
+  name: "Gemini 1.5 Pro",
+  costPer1kTokens: 0.0025,
+  strengths: ["Multimodal", "Cost-effective", "Large context"],
+  color: "tech-blue",
+  icon: <Eye className="w-4 h-4" />
+}, {
+  name: "GPT-4o Mini",
+  costPer1kTokens: 0.00015,
+  strengths: ["Ultra fast", "Cheap", "Good for simple tasks"],
+  color: "tech-purple",
+  icon: <MessageSquare className="w-4 h-4" />
+}];
 export default function AICalculator() {
   const [inputs, setInputs] = useState<CalculatorInputs>({
     monthlyUsers: 1000,
@@ -88,73 +79,74 @@ export default function AICalculator() {
     teamSize: '',
     revenueModel: ''
   });
-
-  const [recommendations, setRecommendations] = useState<{model: AIModel, score: number, monthlyCost: number}[]>([]);
-
+  const [recommendations, setRecommendations] = useState<{
+    model: AIModel;
+    score: number;
+    monthlyCost: number;
+  }[]>([]);
   const calculateRecommendations = () => {
     const totalTokensPerMonth = inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30;
-    
     const modelScores = aiModels.map(model => {
       let score = 50; // Base score
-      const monthlyCost = (totalTokensPerMonth / 1000) * model.costPer1kTokens;
-      
+      const monthlyCost = totalTokensPerMonth / 1000 * model.costPer1kTokens;
+
       // App type preferences
       if (inputs.appType === 'chatbot' && model.name.includes('GPT')) score += 20;
       if (inputs.appType === 'voice-assistant' && model.name === 'GPT-4o') score += 25;
       if (inputs.appType === 'vision-app' && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 25;
       if (inputs.appType === 'code-assistant' && model.name === 'Claude 3.5 Sonnet') score += 30;
-      
+
       // Speed vs reasoning preference
       if (inputs.speedVsReasoning < 30 && model.strengths.includes('Fast')) score += 20;
       if (inputs.speedVsReasoning > 70 && model.strengths.includes('Reasoning')) score += 25;
-      
+
       // Budget concerns
       if (inputs.budgetConcern === 'yes' && monthlyCost < 100) score += 15;
       if (inputs.budgetConcern === 'yes' && model.name.includes('Mini')) score += 20;
-      
+
       // Output types
       if (inputs.outputTypes.includes('voice') && model.name === 'GPT-4o') score += 15;
       if (inputs.outputTypes.includes('vision') && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 15;
-      
+
       // Latency requirements
       if (inputs.latencyNeeds === 'real-time' && model.strengths.includes('Ultra fast')) score += 20;
       if (inputs.latencyNeeds === 'real-time' && model.name === 'GPT-4o Mini') score += 15;
       if (inputs.latencyNeeds === 'batch' && model.name === 'Claude 3.5 Sonnet') score += 10;
-      
+
       // Data compliance
       if (inputs.dataCompliance === 'strict' && model.name === 'Claude 3.5 Sonnet') score += 15;
       if (inputs.dataCompliance === 'none' && model.name === 'GPT-4o Mini') score += 10;
-      
+
       // Context window needs
       if (inputs.contextWindow === 'large' && model.strengths.includes('Large context')) score += 20;
       if (inputs.contextWindow === 'large' && model.strengths.includes('Long context')) score += 25;
-      
+
       // Usage patterns
       if (inputs.usagePattern === 'burst' && model.name.includes('Mini')) score += 15;
       if (inputs.usagePattern === 'steady' && model.name === 'Gemini 1.5 Pro') score += 10;
-      
+
       // Revenue model considerations
       if (inputs.revenueModel === 'free' && monthlyCost < 50) score += 20;
       if (inputs.revenueModel === 'paid' && model.name === 'GPT-4o') score += 10;
-      
+
       // Team size considerations
       if (inputs.teamSize === 'solo' && model.strengths.includes('Fast')) score += 10;
       if (inputs.teamSize === 'large' && model.name === 'Claude 3.5 Sonnet') score += 10;
-      
+
       // Geographic considerations
       if (inputs.primaryMarket === 'global' && model.name === 'GPT-4o') score += 10;
       if (inputs.primaryMarket === 'us' && model.name.includes('GPT')) score += 5;
-      
-      return { model, score: Math.min(100, score), monthlyCost };
+      return {
+        model,
+        score: Math.min(100, score),
+        monthlyCost
+      };
     });
-    
     setRecommendations(modelScores.sort((a, b) => b.score - a.score));
   };
-
   useEffect(() => {
     calculateRecommendations();
   }, [inputs]);
-
   const resetCalculator = () => {
     setInputs({
       monthlyUsers: 1000,
@@ -175,27 +167,19 @@ export default function AICalculator() {
       revenueModel: ''
     });
   };
-
   const handleOutputTypeChange = (type: string, checked: boolean) => {
     setInputs(prev => ({
       ...prev,
-      outputTypes: checked 
-        ? [...prev.outputTypes, type]
-        : prev.outputTypes.filter(t => t !== type)
+      outputTypes: checked ? [...prev.outputTypes, type] : prev.outputTypes.filter(t => t !== type)
     }));
   };
-
   const handlePlatformChange = (platform: string, checked: boolean) => {
     setInputs(prev => ({
       ...prev,
-      platforms: checked 
-        ? [...prev.platforms, platform]
-        : prev.platforms.filter(p => p !== platform)
+      platforms: checked ? [...prev.platforms, platform] : prev.platforms.filter(p => p !== platform)
     }));
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
@@ -203,7 +187,7 @@ export default function AICalculator() {
           <div className="text-center text-white">
             <div className="inline-flex items-center gap-2 mb-6">
               <Calculator className="w-8 h-8" />
-              <h1 className="text-4xl md:text-6xl font-bold">AI Agent Calculator</h1>
+              <h1 className="text-4xl md:text-6xl font-bold">Identify the best AI Agent for your App</h1>
             </div>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
               Find the perfect AI model for your startup. Get cost estimates and recommendations based on your specific needs.
@@ -233,37 +217,27 @@ export default function AICalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="monthlyUsers">Expected Monthly Users</Label>
-                    <Input
-                      id="monthlyUsers"
-                      type="number"
-                      value={inputs.monthlyUsers}
-                      onChange={(e) => setInputs(prev => ({...prev, monthlyUsers: parseInt(e.target.value) || 0}))}
-                      placeholder="e.g., 10,000"
-                    />
+                    <Input id="monthlyUsers" type="number" value={inputs.monthlyUsers} onChange={e => setInputs(prev => ({
+                    ...prev,
+                    monthlyUsers: parseInt(e.target.value) || 0
+                  }))} placeholder="e.g., 10,000" />
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="sessionsPerDay">Sessions per User/Day</Label>
-                    <Input
-                      id="sessionsPerDay"
-                      type="number"
-                      value={inputs.sessionsPerDay}
-                      onChange={(e) => setInputs(prev => ({...prev, sessionsPerDay: parseInt(e.target.value) || 0}))}
-                      placeholder="e.g., 3"
-                    />
+                    <Input id="sessionsPerDay" type="number" value={inputs.sessionsPerDay} onChange={e => setInputs(prev => ({
+                    ...prev,
+                    sessionsPerDay: parseInt(e.target.value) || 0
+                  }))} placeholder="e.g., 3" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label>Tokens per Session: {inputs.tokensPerSession.toLocaleString()}</Label>
-                  <Slider
-                    value={[inputs.tokensPerSession]}
-                    onValueChange={(value) => setInputs(prev => ({...prev, tokensPerSession: value[0]}))}
-                    max={5000}
-                    min={100}
-                    step={100}
-                    className="w-full"
-                  />
+                  <Slider value={[inputs.tokensPerSession]} onValueChange={value => setInputs(prev => ({
+                  ...prev,
+                  tokensPerSession: value[0]
+                }))} max={5000} min={100} step={100} className="w-full" />
                   <div className="text-sm text-muted-foreground">
                     ~{Math.round(inputs.tokensPerSession * 0.75)} words per conversation
                   </div>
@@ -279,7 +253,10 @@ export default function AICalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Latency requirements?</Label>
-                    <Select value={inputs.latencyNeeds} onValueChange={(value) => setInputs(prev => ({...prev, latencyNeeds: value}))}>
+                    <Select value={inputs.latencyNeeds} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    latencyNeeds: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Response speed needs" />
                       </SelectTrigger>
@@ -294,7 +271,10 @@ export default function AICalculator() {
 
                   <div className="space-y-2">
                     <Label>Data compliance needs?</Label>
-                    <Select value={inputs.dataCompliance} onValueChange={(value) => setInputs(prev => ({...prev, dataCompliance: value}))}>
+                    <Select value={inputs.dataCompliance} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    dataCompliance: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Privacy requirements" />
                       </SelectTrigger>
@@ -311,7 +291,10 @@ export default function AICalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Context window needs?</Label>
-                    <Select value={inputs.contextWindow} onValueChange={(value) => setInputs(prev => ({...prev, contextWindow: value}))}>
+                    <Select value={inputs.contextWindow} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    contextWindow: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Conversation length" />
                       </SelectTrigger>
@@ -326,7 +309,10 @@ export default function AICalculator() {
 
                   <div className="space-y-2">
                     <Label>Usage pattern?</Label>
-                    <Select value={inputs.usagePattern} onValueChange={(value) => setInputs(prev => ({...prev, usagePattern: value}))}>
+                    <Select value={inputs.usagePattern} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    usagePattern: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Traffic pattern" />
                       </SelectTrigger>
@@ -343,7 +329,10 @@ export default function AICalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Primary market?</Label>
-                    <Select value={inputs.primaryMarket} onValueChange={(value) => setInputs(prev => ({...prev, primaryMarket: value}))}>
+                    <Select value={inputs.primaryMarket} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    primaryMarket: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Geographic focus" />
                       </SelectTrigger>
@@ -358,7 +347,10 @@ export default function AICalculator() {
 
                   <div className="space-y-2">
                     <Label>Team size?</Label>
-                    <Select value={inputs.teamSize} onValueChange={(value) => setInputs(prev => ({...prev, teamSize: value}))}>
+                    <Select value={inputs.teamSize} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    teamSize: value
+                  }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="Development team" />
                       </SelectTrigger>
@@ -374,7 +366,10 @@ export default function AICalculator() {
 
                 <div className="space-y-2">
                   <Label>Revenue model?</Label>
-                  <Select value={inputs.revenueModel} onValueChange={(value) => setInputs(prev => ({...prev, revenueModel: value}))}>
+                  <Select value={inputs.revenueModel} onValueChange={value => setInputs(prev => ({
+                  ...prev,
+                  revenueModel: value
+                }))}>
                     <SelectTrigger>
                       <SelectValue placeholder="How do you monetize?" />
                     </SelectTrigger>
@@ -397,7 +392,10 @@ export default function AICalculator() {
                 
                 <div className="space-y-2">
                   <Label>What type of app are you building?</Label>
-                  <Select value={inputs.appType} onValueChange={(value) => setInputs(prev => ({...prev, appType: value}))}>
+                  <Select value={inputs.appType} onValueChange={value => setInputs(prev => ({
+                  ...prev,
+                  appType: value
+                }))}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select app type" />
                     </SelectTrigger>
@@ -415,30 +413,20 @@ export default function AICalculator() {
                 <div className="space-y-3">
                   <Label>AI capabilities needed:</Label>
                   <div className="grid grid-cols-2 gap-3">
-                    {['text', 'voice', 'vision', 'code'].map(type => (
-                      <div key={type} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={type}
-                          checked={inputs.outputTypes.includes(type)}
-                          onCheckedChange={(checked) => handleOutputTypeChange(type, !!checked)}
-                        />
+                    {['text', 'voice', 'vision', 'code'].map(type => <div key={type} className="flex items-center space-x-2">
+                        <Checkbox id={type} checked={inputs.outputTypes.includes(type)} onCheckedChange={checked => handleOutputTypeChange(type, !!checked)} />
                         <Label htmlFor={type} className="capitalize">{type}</Label>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label>Speed vs Deep Reasoning</Label>
                   <div className="space-y-2">
-                    <Slider
-                      value={[inputs.speedVsReasoning]}
-                      onValueChange={(value) => setInputs(prev => ({...prev, speedVsReasoning: value[0]}))}
-                      max={100}
-                      min={0}
-                      step={10}
-                      className="w-full"
-                    />
+                    <Slider value={[inputs.speedVsReasoning]} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    speedVsReasoning: value[0]
+                  }))} max={100} min={0} step={10} className="w-full" />
                     <div className="flex justify-between text-sm text-muted-foreground">
                       <span>⚡ Fastest</span>
                       <span>🧠 Deepest Reasoning</span>
@@ -449,7 +437,10 @@ export default function AICalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-3">
                     <Label>Plan to fine-tune?</Label>
-                    <RadioGroup value={inputs.fineTune} onValueChange={(value) => setInputs(prev => ({...prev, fineTune: value}))}>
+                    <RadioGroup value={inputs.fineTune} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    fineTune: value
+                  }))}>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="finetune-yes" />
                         <Label htmlFor="finetune-yes">Yes</Label>
@@ -463,7 +454,10 @@ export default function AICalculator() {
 
                   <div className="space-y-3">
                     <Label>Budget is tight?</Label>
-                    <RadioGroup value={inputs.budgetConcern} onValueChange={(value) => setInputs(prev => ({...prev, budgetConcern: value}))}>
+                    <RadioGroup value={inputs.budgetConcern} onValueChange={value => setInputs(prev => ({
+                    ...prev,
+                    budgetConcern: value
+                  }))}>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="budget-yes" />
                         <Label htmlFor="budget-yes">Yes</Label>
@@ -496,10 +490,8 @@ export default function AICalculator() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {recommendations.length > 0 ? (
-                <div className="space-y-4">
-                  {recommendations.map((rec, index) => (
-                    <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-purple' : ''}`}>
+              {recommendations.length > 0 ? <div className="space-y-4">
+                  {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-purple' : ''}`}>
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-3">
@@ -524,20 +516,17 @@ export default function AICalculator() {
                         </div>
                         
                         <div className="flex flex-wrap gap-1 mb-3">
-                          {rec.model.strengths.map(strength => (
-                            <Badge key={strength} variant="outline" className="text-xs">
+                          {rec.model.strengths.map(strength => <Badge key={strength} variant="outline" className="text-xs">
                               {strength}
-                            </Badge>
-                          ))}
+                            </Badge>)}
                         </div>
                         
                         <div className="text-sm text-muted-foreground">
-                          ~{((inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30) / 1000000).toFixed(1)}M tokens/month
+                          ~{(inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30 / 1000000).toFixed(1)}M tokens/month
                           • ${(rec.model.costPer1kTokens * 1000).toFixed(2)} per 1M tokens
                         </div>
                       </CardContent>
-                    </Card>
-                  ))}
+                    </Card>)}
                   
                   <div className="mt-6 p-4 bg-muted/50 rounded-lg">
                     <h4 className="font-semibold mb-2">💡 Pro Tips</h4>
@@ -548,17 +537,13 @@ export default function AICalculator() {
                       <li>• Most providers offer volume discounts for high usage</li>
                     </ul>
                   </div>
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
+                </div> : <div className="text-center py-8 text-muted-foreground">
                   <Calculator className="w-12 h-12 mx-auto mb-4 opacity-50" />
                   <p>Fill out the form to see AI model recommendations</p>
-                </div>
-              )}
+                </div>}
             </CardContent>
           </Card>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
