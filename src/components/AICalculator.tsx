@@ -204,7 +204,7 @@ export default function AICalculator() {
     return '';
   };
   return <TooltipProvider>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <div className="relative overflow-hidden" style={{
         backgroundColor: '#7C3CEC'
