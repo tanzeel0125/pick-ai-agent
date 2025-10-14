@@ -726,9 +726,7 @@ export default function AICalculator() {
       <div className="bg-tech-green py-4 lg:py-6 mb-40 lg:mb-0">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
-            <h2 className="text-xl md:text-2xl font-bold text-black text-center lg:text-left">
-              Get FREE Quote to Build Your AI App
-            </h2>
+            <h2 className="text-xl md:text-2xl font-bold text-black text-center lg:text-left">Need help to build your app?</h2>
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-3 justify-center lg:justify-end flex-shrink-0">
               <Button asChild size="sm" className="bg-black hover:bg-black/90 text-tech-green font-semibold px-5 w-full sm:w-auto">
                 <a href="https://techpacity.agency/contact-us/" target="_blank" rel="noopener noreferrer">
