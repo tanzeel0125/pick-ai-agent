@@ -181,9 +181,9 @@ export default function AICalculator() {
   };
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="gradient-primary relative overflow-hidden">
+      <div className="relative overflow-hidden bg-black">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-        <div className="container mx-auto px-4 py-16 relative bg-indigo-900">
+        <div className="container mx-auto px-4 py-16 relative">
           <div className="text-center text-white">
             <div className="inline-flex items-center gap-2 mb-6">
               <Calculator className="w-8 h-8" />
