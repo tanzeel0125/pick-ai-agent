@@ -210,18 +210,15 @@ export default function AICalculator() {
         backgroundColor: '#7C3CEC'
       }}>
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-          <div className="container mx-auto px-4 py-10 relative">
+          <div className="container mx-auto px-4 py-8 relative">
             <div className="text-center text-white">
-              <div className="inline-flex items-center gap-2 mb-6">
-                
-                <h1 className="md:text-6xl font-bold text-3xl">Pick the Right AI Agent</h1>
-              </div>
-              <p className="md:text-2xl text-white/90 max-w-3xl text-sm mx-0 px-[19px]">Get cost estimates and recommendations based on your specific needs.</p>
+              <h1 className="md:text-5xl font-bold text-3xl mb-3">Pick the Right AI Agent</h1>
+              <p className="md:text-xl text-white/90 max-w-2xl text-sm mx-auto">Get cost estimates based on your needs.</p>
             </div>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-6">
           <div className="grid lg:grid-cols-2 gap-8">
           {/* Calculator Form - Black Background */}
           <Card className="shadow-card bg-black border-tech-green/20 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
