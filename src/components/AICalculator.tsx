@@ -202,7 +202,7 @@ export default function AICalculator() {
           <Card className="shadow-card bg-black border-tech-green/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-tech-purple" />
+                <TrendingUp className="w-5 h-5 text-tech-green" />
                 Tell us about your app
               </CardTitle>
               <CardDescription>
@@ -491,7 +491,7 @@ export default function AICalculator() {
             </CardHeader>
             <CardContent>
               {recommendations.length > 0 ? <div className="space-y-4">
-                  {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-purple' : ''}`}>
+                  {recommendations.map((rec, index) => <Card key={rec.model.name} className={`relative overflow-hidden transition-smooth hover:shadow-lg ${index === 0 ? 'ring-2 ring-tech-green' : ''}`}>
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-3">
@@ -508,7 +508,7 @@ export default function AICalculator() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-2xl font-bold text-tech-purple">
+                            <div className="text-2xl font-bold text-tech-green">
                               ${rec.monthlyCost.toFixed(0)}
                             </div>
                             <div className="text-sm text-muted-foreground">per month</div>
