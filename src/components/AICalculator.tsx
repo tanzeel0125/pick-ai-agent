@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerTrigger } from '@/components/ui/drawer';
-import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp, Mail, MessageCircle, Info } from 'lucide-react';
+import { Calculator, Zap, Brain, Eye, Mic, MessageSquare, RotateCcw, TrendingUp, Mail, MessageCircle, Info, ChevronUp } from 'lucide-react';
 interface CalculatorInputs {
   monthlyUsers: number;
   sessionsPerDay: number;
@@ -86,6 +86,8 @@ export default function AICalculator() {
     score: number;
     monthlyCost: number;
   }[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [hasSeenResults, setHasSeenResults] = useState(false);
   const hasUserInput = () => {
     return inputs.monthlyUsers > 0 || inputs.sessionsPerDay > 0 || inputs.tokensPerSession > 0 || inputs.appType !== '' || inputs.outputTypes.length > 0 || inputs.speedVsReasoning > 0 || inputs.fineTune !== '' || inputs.budgetConcern !== '' || inputs.latencyNeeds !== '' || inputs.dataCompliance !== '' || inputs.contextWindow !== '' || inputs.usagePattern !== '' || inputs.primaryMarket !== '' || inputs.teamSize !== '' || inputs.revenueModel !== '';
   };
@@ -156,6 +158,12 @@ export default function AICalculator() {
   useEffect(() => {
     calculateRecommendations();
   }, [inputs]);
+
+  useEffect(() => {
+    if (hasUserInput() && recommendations.length > 0 && !hasSeenResults) {
+      setHasSeenResults(true);
+    }
+  }, [recommendations, hasUserInput]);
   const resetCalculator = () => {
     setInputs({
       monthlyUsers: 0,
@@ -594,14 +602,72 @@ export default function AICalculator() {
             </CardContent>
           </Card>
 
-          {/* Results - Mobile Bottom Drawer */}
+          {/* Results - Mobile Peek Preview Drawer */}
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50">
-            <Drawer>
-              <DrawerTrigger asChild>
-                <Button className="w-full rounded-none h-14 text-base font-semibold" disabled={!hasUserInput()}>
-                  {hasUserInput() ? `View ${recommendations.length} Recommendations` : 'Fill form to see results'}
-                </Button>
-              </DrawerTrigger>
+            <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+              {/* Peek Preview - Always Visible */}
+              <div 
+                className={`bg-card border-t-2 border-border rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
+                  hasUserInput() && !drawerOpen 
+                    ? 'translate-y-0 animate-bounce-gentle' 
+                    : !hasUserInput()
+                    ? 'translate-y-[calc(100%-60px)]'
+                    : 'translate-y-0'
+                }`}
+                onClick={() => hasUserInput() && setDrawerOpen(true)}
+              >
+                {/* Drag Handle */}
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
+                </div>
+                
+                {/* Peek Content */}
+                <div className="px-4 pb-4">
+                  {hasUserInput() && recommendations.length > 0 ? (
+                    <>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-muted-foreground">
+                          {recommendations.length} AI Models Found
+                        </span>
+                        <ChevronUp className="w-5 h-5 text-primary animate-bounce" />
+                      </div>
+                      
+                      {/* Mini Preview of Top Recommendation */}
+                      <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg border border-tech-green/30">
+                        <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
+                          {recommendations[0].model.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-sm truncate">
+                            🏆 {recommendations[0].model.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Best match for your needs
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <div className="text-lg font-bold text-tech-green">
+                            ${recommendations[0].monthlyCost.toFixed(0)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">per month</div>
+                        </div>
+                      </div>
+                      
+                      <p className="text-xs text-center text-muted-foreground mt-3">
+                        👆 Tap or drag up to view all recommendations
+                      </p>
+                    </>
+                  ) : (
+                    <div className="text-center py-2">
+                      <p className="text-sm text-muted-foreground">
+                        Fill the form to see AI recommendations
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Full Drawer Content */}
               <DrawerContent className="max-h-[85vh]">
                 <DrawerHeader>
                   <DrawerTitle className="flex items-center gap-2">
