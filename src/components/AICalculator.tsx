@@ -210,7 +210,7 @@ export default function AICalculator() {
         backgroundColor: '#7C3CEC'
       }}>
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-          <div className="container mx-auto px-4 py-16 relative">
+          <div className="container mx-auto px-4 py-10 relative">
             <div className="text-center text-white">
               <div className="inline-flex items-center gap-2 mb-6">
                 
