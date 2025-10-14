@@ -607,7 +607,7 @@ export default function AICalculator() {
             <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               {/* Peek Preview - Always Visible */}
               <div 
-                className={`bg-white border-t-2 border-gray-200 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
+                className={`bg-gray-100 border-t-2 border-gray-300 rounded-t-xl shadow-2xl transition-all duration-500 cursor-pointer ${
                   hasUserInput() && !drawerOpen 
                     ? 'translate-y-0 animate-bounce-gentle' 
                     : !hasUserInput()
@@ -618,7 +618,7 @@ export default function AICalculator() {
               >
                 {/* Drag Handle */}
                 <div className="flex justify-center pt-3 pb-2">
-                  <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+                  <div className="w-12 h-1.5 bg-gray-400 rounded-full" />
                 </div>
                 
                 {/* Peek Content */}
@@ -633,7 +633,7 @@ export default function AICalculator() {
                       </div>
                       
                       {/* Mini Preview of Top Recommendation */}
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-tech-green/30">
+                      <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-tech-green/30">
                         <div className={`p-2 rounded-lg bg-${recommendations[0].model.color}/10 flex-shrink-0`}>
                           {recommendations[0].model.icon}
                         </div>
@@ -668,7 +668,7 @@ export default function AICalculator() {
               </div>
 
               {/* Full Drawer Content */}
-              <DrawerContent className="max-h-[85vh] bg-white border-gray-200">
+              <DrawerContent className="max-h-[85vh] bg-gray-100 border-gray-300">
                 <DrawerHeader>
                   <DrawerTitle className="flex items-center gap-2 text-gray-900">
                     <Zap className="w-5 h-5 text-tech-blue" />
@@ -717,7 +717,7 @@ export default function AICalculator() {
                           </CardContent>
                         </Card>)}
                       
-                      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                      <div className="mt-6 p-4 bg-white rounded-lg">
                         <h4 className="font-semibold mb-2 text-gray-900">💡 Pro Tips</h4>
                         <ul className="text-sm text-gray-700 space-y-1">
                           <li>• Start with the recommended model and test with real usage</li>
