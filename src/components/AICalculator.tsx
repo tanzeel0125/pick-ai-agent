@@ -62,12 +62,12 @@ const aiModels: AIModel[] = [{
 }];
 export default function AICalculator() {
   const [inputs, setInputs] = useState<CalculatorInputs>({
-    monthlyUsers: 1000,
-    sessionsPerDay: 3,
-    tokensPerSession: 1000,
+    monthlyUsers: 0,
+    sessionsPerDay: 0,
+    tokensPerSession: 0,
     appType: '',
     outputTypes: [],
-    speedVsReasoning: 50,
+    speedVsReasoning: 0,
     platforms: [],
     fineTune: '',
     budgetConcern: '',
@@ -84,7 +84,30 @@ export default function AICalculator() {
     score: number;
     monthlyCost: number;
   }[]>([]);
+  const hasUserInput = () => {
+    return inputs.monthlyUsers > 0 || 
+           inputs.sessionsPerDay > 0 || 
+           inputs.tokensPerSession > 0 ||
+           inputs.appType !== '' ||
+           inputs.outputTypes.length > 0 ||
+           inputs.speedVsReasoning > 0 ||
+           inputs.fineTune !== '' ||
+           inputs.budgetConcern !== '' ||
+           inputs.latencyNeeds !== '' ||
+           inputs.dataCompliance !== '' ||
+           inputs.contextWindow !== '' ||
+           inputs.usagePattern !== '' ||
+           inputs.primaryMarket !== '' ||
+           inputs.teamSize !== '' ||
+           inputs.revenueModel !== '';
+  };
+
   const calculateRecommendations = () => {
+    if (!hasUserInput()) {
+      setRecommendations([]);
+      return;
+    }
+
     const totalTokensPerMonth = inputs.monthlyUsers * inputs.sessionsPerDay * inputs.tokensPerSession * 30;
     const modelScores = aiModels.map(model => {
       let score = 50; // Base score
@@ -149,12 +172,12 @@ export default function AICalculator() {
   }, [inputs]);
   const resetCalculator = () => {
     setInputs({
-      monthlyUsers: 1000,
-      sessionsPerDay: 3,
-      tokensPerSession: 1000,
+      monthlyUsers: 0,
+      sessionsPerDay: 0,
+      tokensPerSession: 0,
       appType: '',
       outputTypes: [],
-      speedVsReasoning: 50,
+      speedVsReasoning: 0,
       platforms: [],
       fineTune: '',
       budgetConcern: '',
@@ -537,9 +560,8 @@ export default function AICalculator() {
                       <li>• Most providers offer volume discounts for high usage</li>
                     </ul>
                   </div>
-                </div> : <div className="text-center py-8 text-muted-foreground">
-                  <Calculator className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>Fill out the form to see AI model recommendations</p>
+                </div> : <div className="text-center py-16 text-muted-foreground">
+                  <p className="text-xl font-bold">Once you enter your app details, recommended AI Agents will show here</p>
                 </div>}
             </CardContent>
           </Card>
