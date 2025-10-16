@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Model Calculator - Pick the Right AI Agent</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons (for SVG icons) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    /* Custom Design System */
+    :root {
+      --color-tech-green: #00EE60;
+      --color-tech-blue: #5B9EFF;
+      --color-tech-purple: #7C3CEC;
+      --color-tech-orange: #FF6B35;
+      --color-neutral-900: #171717;
+      --color-neutral-800: #262626;
+      --color-neutral-700: #404040;
+      --color-gray-300: #D1D5DB;
+      --color-gray-500: #6B7280;
+      --color-gray-600: #4B5563;
+      --color-gray-700: #374151;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: #fafafa;
+      line-height: 1.6;
+    }
+    
+    /* Grid pattern background */
+    .bg-grid-pattern {
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    
+    /* Card styling */
+    .card {
+      background-color: #000;
+      border: 1px solid rgba(0, 238, 96, 0.2);
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-neutral {
+      background-color: rgba(38, 38, 38, 0.5);
+      border: 1px solid #404040;
+    }
+    
+    /* Input styling */
+    input[type="number"],
+    select {
+      background-color: #171717;
+      border: 1px solid #404040;
+      border-radius: 0.5rem;
+      color: #fafafa;
+      padding: 0.75rem;
+      width: 100%;
+      font-size: 0.875rem;
+      transition: all 0.3s;
+    }
+    
+    input[type="number"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--color-tech-purple);
+      box-shadow: 0 0 0 2px rgba(124, 60, 236, 0.2);
+    }
+    
+    /* Slider styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #404040;
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-tech-purple);
+      cursor: pointer;
+      border: 2px solid var(--color-tech-purple);
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-tech-purple);
+      cursor: pointer;
+      border: 2px solid var(--color-tech-purple);
+    }
+    
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-tech-purple);
+      border-radius: 4px;
+      background-color: transparent;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+    
+    input[type="checkbox"]:checked {
+      background-color: var(--color-tech-purple);
+    }
+    
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    
+    /* Button styling */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #404040;
+      color: #fafafa;
+    }
+    
+    .btn-outline:hover {
+      background-color: #171717;
+    }
+    
+    .btn-whatsapp {
+      background-color: #25D366;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 9999px;
+      font-size: 1rem;
+    }
+    
+    .btn-whatsapp:hover {
+      background-color: #20BA5A;
+    }
+    
+    /* Badge styling */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .badge-primary {
+      background-color: var(--color-tech-purple);
+      color: white;
+    }
+    
+    .badge-secondary {
+      background-color: #404040;
+      color: #fafafa;
+    }
+    
+    .badge-outline {
+      background-color: transparent;
+      border: 1px solid #404040;
+      color: #D1D5DB;
+    }
+    
+    /* Model icon colors */
+    .icon-tech-green { color: var(--color-tech-green); background-color: rgba(0, 238, 96, 0.1); }
+    .icon-tech-orange { color: var(--color-tech-orange); background-color: rgba(255, 107, 53, 0.1); }
+    .icon-tech-blue { color: var(--color-tech-blue); background-color: rgba(91, 158, 255, 0.1); }
+    .icon-tech-purple { color: var(--color-tech-purple); background-color: rgba(124, 60, 236, 0.1); }
+    
+    /* Mobile drawer */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 40;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    
+    .drawer-overlay.active {
+      display: block;
+    }
+    
+    .mobile-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .drawer-peek {
+      background-color: #333333;
+      border-top: 2px solid #4B5563;
+      border-radius: 1rem 1rem 0 0;
+      box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+    
+    .drawer-peek.has-results {
+      animation: bounceGentle 2s infinite;
+    }
+    
+    .drawer-full {
+      max-height: 85vh;
+      background-color: #171717;
+      border-top: 2px solid #4B5563;
+      overflow-y: auto;
+      display: none;
+    }
+    
+    .drawer-full.active {
+      display: block;
+    }
+    
+    .drawer-handle {
+      width: 48px;
+      height: 6px;
+      background-color: #6B7280;
+      border-radius: 9999px;
+      margin: 0 auto;
+    }
+    
+    @keyframes bounceGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Recommendation card ring */
+    .rec-card-best {
+      border: 2px solid var(--color-tech-green);
+      box-shadow: 0 0 20px rgba(0, 238, 96, 0.3);
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(64, 64, 64, 0.3);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(107, 114, 128, 0.5);
+      border-radius: 9999px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(107, 114, 128, 0.7);
+    }
+    
+    /* Responsive utilities */
+    @media (max-width: 1024px) {
+      .desktop-results {
+        display: none !important;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .mobile-drawer {
+        display: none !important;
+      }
+      
+      .sticky-sidebar {
+        position: sticky;
+        top: 1rem;
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+      }
+    }
+    
+    /* Tooltip */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      background-color: #171717;
+      color: #fafafa;
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.5rem;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      width: 200px;
+      font-size: 0.75rem;
+      border: 1px solid #404040;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* Separator */
+    .separator {
+      height: 1px;
+      background-color: #404040;
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden" style="background-color: #7C3CEC;">
+    <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+    <div class="container mx-auto px-4 py-6 relative">
+      <div class="text-center text-white">
+        <h1 class="text-2xl md:text-4xl font-bold mb-2">Pick the Right AI Agent</h1>
+        <p class="text-sm md:text-lg text-white/90 max-w-2xl mx-auto">Get cost estimates based on your needs.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Container -->
+  <div class="container mx-auto px-4 py-6">
+    <div class="grid lg:grid-cols-2 gap-8">
+      
+      <!-- Calculator Form -->
+      <div class="card sticky-sidebar">
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="trending-up" style="color: var(--color-tech-green); width: 20px; height: 20px;"></i>
+            <h2 class="text-xl font-bold">Tell us about your app</h2>
+          </div>
+          <p class="text-sm text-gray-400 mb-6">Answer a few questions to get personalized AI model recommendations</p>
+          
+          <form id="calculator-form">
+            <!-- Usage Metrics -->
+            <div class="mb-6">
+              <h3 class="font-semibold text-lg mb-4">Usage Metrics</h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="monthlyUsers" class="block text-sm font-medium mb-2">Expected Monthly Users</label>
+                  <input type="number" id="monthlyUsers" placeholder="e.g., 10,000" min="0">
+                  <p id="hint-monthlyUsers" class="text-xs text-gray-400 mt-1"></p>
+                </div>
+                
+                <div>
+                  <label for="sessionsPerDay" class="block text-sm font-medium mb-2">Sessions per User/Day</label>
+                  <input type="number" id="sessionsPerDay" placeholder="e.g., 3" min="0">
+                  <p id="hint-sessionsPerDay" class="text-xs text-gray-400 mt-1"></p>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm font-medium">Tokens per Session</label>
+                  <span id="tokensValue" class="text-sm font-semibold" style="color: var(--color-tech-purple);">0</span>
+                </div>
+                <input type="range" id="tokensPerSession" min="0" max="5000" step="100" value="0">
+                <div class="text-xs text-gray-400 mt-1">
+                  ~<span id="wordsCount">0</span> words per conversation
+                </div>
+              </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- Business Considerations -->
+            <div class="mb-6">
+              <h3 class="font-semibold text-lg mb-4">Business Considerations</h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <label class="text-sm font-medium">Latency requirements?</label>
+                    <div class="tooltip">
+                      <i data-lucide="info" style="width: 16px; height: 16px; color: #9CA3AF;"></i>
+                      <span class="tooltip-text">How fast does your app need to respond? Real-time apps need ultra-fast models.</span>
+                    </div>
+                  </div>
+                  <select id="latencyNeeds">
+                    <option value="">Response speed needs</option>
+                    <option value="real-time">Real-time (&lt;200ms)</option>
+                    <option value="fast">Fast (&lt;1s)</option>
+                    <option value="acceptable">Acceptable (&lt;3s)</option>
+                    <option value="batch">Batch processing OK</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="dataCompliance" class="block text-sm font-medium mb-2">Data compliance needs?</label>
+                  <select id="dataCompliance">
+                    <option value="">Privacy requirements</option>
+                    <option value="none">No special requirements</option>
+                    <option value="gdpr">GDPR compliance</option>
+                    <option value="strict">Strict (on-premise preferred)</option>
+                    <option value="healthcare">Healthcare (HIPAA)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <label class="text-sm font-medium">Context window needs?</label>
+                    <div class="tooltip">
+                      <i data-lucide="info" style="width: 16px; height: 16px; color: #9CA3AF;"></i>
+                      <span class="tooltip-text">How much text does your AI need to process at once? Large documents need bigger context windows.</span>
+                    </div>
+                  </div>
+                  <select id="contextWindow">
+                    <option value="">Conversation length</option>
+                    <option value="small">Short conversations</option>
+                    <option value="medium">Medium (few pages)</option>
+                    <option value="large">Large documents</option>
+                    <option value="massive">Massive (books/codebases)</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="usagePattern" class="block text-sm font-medium mb-2">Usage pattern?</label>
+                  <select id="usagePattern">
+                    <option value="">Traffic pattern</option>
+                    <option value="steady">Steady throughout day</option>
+                    <option value="burst">Burst/peak usage</option>
+                    <option value="scheduled">Scheduled batches</option>
+                    <option value="unknown">Unknown/just starting</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="primaryMarket" class="block text-sm font-medium mb-2">Primary market?</label>
+                  <select id="primaryMarket">
+                    <option value="">Geographic focus</option>
+                    <option value="us">United States</option>
+                    <option value="europe">Europe</option>
+                    <option value="asia">Asia-Pacific</option>
+                    <option value="global">Global</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="teamSize" class="block text-sm font-medium mb-2">Team size?</label>
+                  <select id="teamSize">
+                    <option value="">Development team</option>
+                    <option value="solo">Solo founder</option>
+                    <option value="small">Small team (2-5)</option>
+                    <option value="medium">Medium team (6-15)</option>
+                    <option value="large">Large team (15+)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <label for="revenueModel" class="block text-sm font-medium mb-2">Revenue model?</label>
+                <select id="revenueModel">
+                  <option value="">How do you monetize?</option>
+                  <option value="free">Free app (ad-supported)</option>
+                  <option value="freemium">Freemium model</option>
+                  <option value="paid">Paid app/subscription</option>
+                  <option value="b2b">B2B/Enterprise</option>
+                  <option value="unknown">Still figuring out</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="separator"></div>
+            
+            <!-- App Details -->
+            <div class="mb-6">
+              <h3 class="font-semibold text-lg mb-4">App Details</h3>
+              
+              <div class="mb-4">
+                <label for="appType" class="block text-sm font-medium mb-2">What type of app are you building?</label>
+                <select id="appType">
+                  <option value="">Select app type</option>
+                  <option value="chatbot">Chatbot / Customer Support</option>
+                  <option value="voice-assistant">Voice Assistant</option>
+                  <option value="vision-app">Vision/Image Analysis</option>
+                  <option value="code-assistant">Code Assistant</option>
+                  <option value="content-generator">Content Generator</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div class="mb-4">
+                <label class="block text-sm font-medium mb-3">AI capabilities needed:</label>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" id="output-text" value="text">
+                    <label for="output-text" class="text-sm cursor-pointer">Text</label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" id="output-voice" value="voice">
+                    <label for="output-voice" class="text-sm cursor-pointer">Voice</label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" id="output-vision" value="vision">
+                    <label for="output-vision" class="text-sm cursor-pointer">Vision</label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" id="output-code" value="code">
+                    <label for="output-code" class="text-sm cursor-pointer">Code</label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm font-medium">Speed vs Deep Reasoning</label>
+                  <span id="speedValue" class="text-sm font-semibold" style="color: var(--color-tech-purple);">0%</span>
+                </div>
+                <input type="range" id="speedVsReasoning" min="0" max="100" step="10" value="0">
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                  <span>⚡ Fastest</span>
+                  <span>🧠 Deepest Reasoning</span>
+                </div>
+              </div>
+            </div>
+            
+            <button type="button" id="resetBtn" class="btn btn-outline w-full">
+              <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+              Reset Calculator
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Results - Desktop View -->
+      <div class="card card-neutral desktop-results">
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="zap" style="color: var(--color-tech-blue); width: 20px; height: 20px;"></i>
+            <h2 class="text-xl font-bold">AI Model Recommendations</h2>
+          </div>
+          <p class="text-sm text-gray-400 mb-6">Based on your inputs, here are the best AI models for your startup</p>
+          
+          <div id="results-desktop">
+            <div class="text-center py-16 text-gray-400">
+              <p class="text-xl font-bold">Once you enter your app details, recommended AI Agents will show here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer">
+    <!-- Peek Preview -->
+    <div class="drawer-peek" id="drawer-peek">
+      <div class="flex justify-center pt-3 pb-2 bg-neutral-900">
+        <div class="drawer-handle"></div>
+      </div>
+      
+      <div class="px-4 pb-4 bg-neutral-900" id="peek-content">
+        <div class="text-center py-2">
+          <p class="text-sm text-gray-300">Fill the form to see AI recommendations</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Full Drawer (hidden by default) -->
+    <div class="drawer-full" id="drawer-full">
+      <div class="p-6 bg-neutral-900">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="zap" style="color: var(--color-tech-blue); width: 20px; height: 20px;"></i>
+            <h2 class="text-xl font-bold">AI Model Recommendations</h2>
+          </div>
+          <button id="drawer-close" class="text-gray-400 hover:text-white">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+        </div>
+        <p class="text-sm text-gray-300 mb-6">Based on your inputs, here are the best AI models for your startup</p>
+        
+        <div id="results-mobile"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Drawer Overlay -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  
+  <!-- CTA Banner -->
+  <div class="bg-white py-6 lg:py-8 mb-40 lg:mb-0">
+    <div class="container mx-auto px-4 max-w-2xl">
+      <div class="flex flex-col items-center gap-4">
+        <h2 class="text-xl md:text-2xl font-bold text-black text-center">Need help to build your app?</h2>
+        <a href="https://wa.me/19208286711?text=I%20want%20to%20build%20an%20app" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+          </svg>
+          <span class="text-base">Let's Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // AI Models Data
+    const aiModels = [
+      {
+        name: "GPT-4o",
+        costPer1kTokens: 0.005,
+        strengths: ["Fast", "Vision", "Voice", "Reliable"],
+        color: "tech-green",
+        icon: "zap"
+      },
+      {
+        name: "Claude 3.5 Sonnet",
+        costPer1kTokens: 0.003,
+        strengths: ["Reasoning", "Code", "Long context"],
+        color: "tech-orange",
+        icon: "brain"
+      },
+      {
+        name: "Gemini 1.5 Pro",
+        costPer1kTokens: 0.0025,
+        strengths: ["Multimodal", "Cost-effective", "Large context"],
+        color: "tech-blue",
+        icon: "eye"
+      },
+      {
+        name: "GPT-4o Mini",
+        costPer1kTokens: 0.00015,
+        strengths: ["Ultra fast", "Cheap", "Good for simple tasks"],
+        color: "tech-purple",
+        icon: "message-square"
+      }
+    ];
+    
+    // State object
+    const state = {
+      monthlyUsers: 0,
+      sessionsPerDay: 0,
+      tokensPerSession: 0,
+      appType: '',
+      outputTypes: [],
+      speedVsReasoning: 0,
+      latencyNeeds: '',
+      dataCompliance: '',
+      contextWindow: '',
+      usagePattern: '',
+      primaryMarket: '',
+      teamSize: '',
+      revenueModel: ''
+    };
+    
+    // Get form elements
+    const form = document.getElementById('calculator-form');
+    const monthlyUsersInput = document.getElementById('monthlyUsers');
+    const sessionsPerDayInput = document.getElementById('sessionsPerDay');
+    const tokensPerSessionInput = document.getElementById('tokensPerSession');
+    const tokensValue = document.getElementById('tokensValue');
+    const wordsCount = document.getElementById('wordsCount');
+    const speedVsReasoningInput = document.getElementById('speedVsReasoning');
+    const speedValue = document.getElementById('speedValue');
+    const resetBtn = document.getElementById('resetBtn');
+    const drawerPeek = document.getElementById('drawer-peek');
+    const drawerFull = document.getElementById('drawer-full');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawerClose = document.getElementById('drawer-close');
+    
+    // Update tokens display
+    tokensPerSessionInput.addEventListener('input', (e) => {
+      const value = parseInt(e.target.value);
+      state.tokensPerSession = value;
+      tokensValue.textContent = value.toLocaleString();
+      wordsCount.textContent = Math.round(value * 0.75);
+      calculateRecommendations();
+    });
+    
+    // Update speed vs reasoning display
+    speedVsReasoningInput.addEventListener('input', (e) => {
+      const value = parseInt(e.target.value);
+      state.speedVsReasoning = value;
+      speedValue.textContent = value + '%';
+      calculateRecommendations();
+    });
+    
+    // Update monthly users
+    monthlyUsersInput.addEventListener('input', (e) => {
+      state.monthlyUsers = parseInt(e.target.value) || 0;
+      updateValidationHint('monthlyUsers', state.monthlyUsers);
+      calculateRecommendations();
+    });
+    
+    // Update sessions per day
+    sessionsPerDayInput.addEventListener('input', (e) => {
+      state.sessionsPerDay = parseInt(e.target.value) || 0;
+      updateValidationHint('sessionsPerDay', state.sessionsPerDay);
+      calculateRecommendations();
+    });
+    
+    // Update select fields
+    ['appType', 'latencyNeeds', 'dataCompliance', 'contextWindow', 'usagePattern', 'primaryMarket', 'teamSize', 'revenueModel'].forEach(field => {
+      document.getElementById(field).addEventListener('change', (e) => {
+        state[field] = e.target.value;
+        calculateRecommendations();
+      });
+    });
+    
+    // Update checkboxes for output types
+    ['text', 'voice', 'vision', 'code'].forEach(type => {
+      document.getElementById(`output-${type}`).addEventListener('change', (e) => {
+        if (e.target.checked) {
+          state.outputTypes.push(type);
+        } else {
+          state.outputTypes = state.outputTypes.filter(t => t !== type);
+        }
+        calculateRecommendations();
+      });
+    });
+    
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      // Reset state
+      state.monthlyUsers = 0;
+      state.sessionsPerDay = 0;
+      state.tokensPerSession = 0;
+      state.appType = '';
+      state.outputTypes = [];
+      state.speedVsReasoning = 0;
+      state.latencyNeeds = '';
+      state.dataCompliance = '';
+      state.contextWindow = '';
+      state.usagePattern = '';
+      state.primaryMarket = '';
+      state.teamSize = '';
+      state.revenueModel = '';
+      
+      // Reset form
+      form.reset();
+      tokensValue.textContent = '0';
+      wordsCount.textContent = '0';
+      speedValue.textContent = '0%';
+      document.getElementById('hint-monthlyUsers').textContent = '';
+      document.getElementById('hint-sessionsPerDay').textContent = '';
+      
+      // Reset results
+      calculateRecommendations();
+    });
+    
+    // Validation hints
+    function updateValidationHint(field, value) {
+      const hintElement = document.getElementById(`hint-${field}`);
+      let hint = '';
+      
+      if (field === 'monthlyUsers') {
+        if (value === 0) hint = '';
+        else if (value < 1000) hint = '🟢 Small app - Great for MVP';
+        else if (value < 10000) hint = '🟡 Medium app - Consider scaling';
+        else hint = '🔴 Large app - Enterprise-level planning needed';
+      }
+      
+      if (field === 'sessionsPerDay') {
+        if (value === 0) hint = '';
+        else if (value < 2) hint = '🟢 Low engagement';
+        else if (value < 5) hint = '🟡 Medium engagement';
+        else hint = '🔴 High engagement - Premium features needed';
+      }
+      
+      hintElement.textContent = hint;
+    }
+    
+    // Check if user has input
+    function hasUserInput() {
+      return state.monthlyUsers > 0 || 
+             state.sessionsPerDay > 0 || 
+             state.tokensPerSession > 0 || 
+             state.appType !== '' || 
+             state.outputTypes.length > 0 || 
+             state.speedVsReasoning > 0 || 
+             state.latencyNeeds !== '' || 
+             state.dataCompliance !== '' || 
+             state.contextWindow !== '' || 
+             state.usagePattern !== '' || 
+             state.primaryMarket !== '' || 
+             state.teamSize !== '' || 
+             state.revenueModel !== '';
+    }
+    
+    // Calculate recommendations
+    function calculateRecommendations() {
+      if (!hasUserInput()) {
+        renderResults([]);
+        return;
+      }
+      
+      const totalTokensPerMonth = state.monthlyUsers * state.sessionsPerDay * state.tokensPerSession * 30;
+      
+      const modelScores = aiModels.map(model => {
+        let score = 50; // Base score
+        const monthlyCost = (totalTokensPerMonth / 1000) * model.costPer1kTokens;
+        
+        // App type preferences
+        if (state.appType === 'chatbot' && model.name.includes('GPT')) score += 20;
+        if (state.appType === 'voice-assistant' && model.name === 'GPT-4o') score += 25;
+        if (state.appType === 'vision-app' && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 25;
+        if (state.appType === 'code-assistant' && model.name === 'Claude 3.5 Sonnet') score += 30;
+        
+        // Speed vs reasoning preference
+        if (state.speedVsReasoning < 30 && model.strengths.includes('Fast')) score += 20;
+        if (state.speedVsReasoning > 70 && model.strengths.includes('Reasoning')) score += 25;
+        
+        // Output types
+        if (state.outputTypes.includes('voice') && model.name === 'GPT-4o') score += 25;
+        if (state.outputTypes.includes('vision') && (model.name === 'GPT-4o' || model.name === 'Gemini 1.5 Pro')) score += 25;
+        if (state.outputTypes.includes('text') && model.name.includes('Claude')) score += 20;
+        if (state.outputTypes.includes('code') && model.name === 'Claude 3.5 Sonnet') score += 30;
+        if (state.outputTypes.includes('code') && model.name === 'GPT-4o') score += 15;
+        
+        // Latency requirements
+        if (state.latencyNeeds === 'real-time' && model.strengths.includes('Ultra fast')) score += 20;
+        if (state.latencyNeeds === 'real-time' && model.name === 'GPT-4o Mini') score += 15;
+        if (state.latencyNeeds === 'batch' && model.name === 'Claude 3.5 Sonnet') score += 10;
+        
+        // Data compliance
+        if (state.dataCompliance === 'strict' && model.name === 'Claude 3.5 Sonnet') score += 15;
+        if (state.dataCompliance === 'none' && model.name === 'GPT-4o Mini') score += 10;
+        
+        // Context window needs
+        if (state.contextWindow === 'large' && model.strengths.includes('Large context')) score += 20;
+        if (state.contextWindow === 'large' && model.strengths.includes('Long context')) score += 25;
+        
+        // Usage patterns
+        if (state.usagePattern === 'burst' && model.name.includes('Mini')) score += 15;
+        if (state.usagePattern === 'steady' && model.name === 'Gemini 1.5 Pro') score += 10;
+        
+        // Revenue model considerations
+        if (state.revenueModel === 'free' && monthlyCost < 50) score += 20;
+        if (state.revenueModel === 'paid' && model.name === 'GPT-4o') score += 10;
+        
+        // Team size considerations
+        if (state.teamSize === 'solo' && model.strengths.includes('Fast')) score += 10;
+        if (state.teamSize === 'large' && model.name === 'Claude 3.5 Sonnet') score += 10;
+        
+        // Geographic considerations
+        if (state.primaryMarket === 'global' && model.name === 'GPT-4o') score += 10;
+        if (state.primaryMarket === 'us' && model.name.includes('GPT')) score += 5;
+        
+        return {
+          model,
+          score: Math.min(100, score),
+          monthlyCost
+        };
+      });
+      
+      // Sort by score
+      modelScores.sort((a, b) => b.score - a.score);
+      renderResults(modelScores);
+    }
+    
+    // Render results
+    function renderResults(recommendations) {
+      const desktopContainer = document.getElementById('results-desktop');
+      const mobileContainer = document.getElementById('results-mobile');
+      const peekContent = document.getElementById('peek-content');
+      
+      if (recommendations.length === 0) {
+        const emptyState = `
+          <div class="text-center py-16 text-gray-400">
+            <p class="text-xl font-bold">Once you enter your app details, recommended AI Agents will show here</p>
+          </div>
+        `;
+        desktopContainer.innerHTML = emptyState;
+        mobileContainer.innerHTML = emptyState;
+        peekContent.innerHTML = `
+          <div class="text-center py-2">
+            <p class="text-sm text-gray-300">Fill the form to see AI recommendations</p>
+          </div>
+        `;
+        drawerPeek.classList.remove('has-results');
+        return;
+      }
+      
+      // Add bounce animation to peek
+      drawerPeek.classList.add('has-results');
+      
+      // Generate cards HTML
+      const cardsHTML = recommendations.map((rec, index) => {
+        const totalTokens = (state.monthlyUsers * state.sessionsPerDay * state.tokensPerSession * 30 / 1000000).toFixed(1);
+        const costPer1M = (rec.model.costPer1kTokens * 1000).toFixed(2);
+        
+        return `
+          <div class="card ${index === 0 ? 'rec-card-best' : ''}" style="margin-bottom: 1rem; transition: all 0.3s;">
+            <div class="p-4">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                  <div class="icon-${rec.model.color}" style="padding: 0.5rem; border-radius: 0.5rem;">
+                    <i data-lucide="${rec.model.icon}" style="width: 16px; height: 16px;"></i>
+                  </div>
+                  <div>
+                    <h4 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">${rec.model.name}</h4>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                      <span class="badge ${index === 0 ? 'badge-primary' : 'badge-secondary'}">
+                        ${index === 0 ? '🏆 Best Match' : `${rec.score}% match`}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: var(--color-tech-green);">
+                    $${rec.monthlyCost.toFixed(0)}
+                  </div>
+                  <div style="font-size: 0.875rem; color: #9CA3AF;">per month</div>
+                </div>
+              </div>
+              
+              <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 0.75rem;">
+                ${rec.model.strengths.map(strength => 
+                  `<span class="badge badge-outline">${strength}</span>`
+                ).join('')}
+              </div>
+              
+              <div style="font-size: 0.875rem; color: #9CA3AF;">
+                ~${totalTokens}M tokens/month • $${costPer1M} per 1M tokens
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      const proTips = `
+        <div style="margin-top: 1.5rem; padding: 1rem; background-color: rgba(64, 64, 64, 0.3); border-radius: 0.5rem;">
+          <h4 style="font-weight: 600; margin-bottom: 0.5rem;">💡 Pro Tips</h4>
+          <ul style="font-size: 0.875rem; color: #9CA3AF; list-style: none; padding: 0;">
+            <li style="margin-bottom: 0.25rem;">• Start with the recommended model and test with real usage</li>
+            <li style="margin-bottom: 0.25rem;">• Consider using different models for different features</li>
+            <li style="margin-bottom: 0.25rem;">• Monitor actual token usage - estimates can vary ±30%</li>
+            <li>• Most providers offer volume discounts for high usage</li>
+          </ul>
+        </div>
+      `;
+      
+      desktopContainer.innerHTML = cardsHTML + proTips;
+      mobileContainer.innerHTML = cardsHTML + proTips;
+      
+      // Update peek preview
+      const topRec = recommendations[0];
+      peekContent.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="font-size: 0.875rem; font-weight: 500; color: #D1D5DB;">
+            ${recommendations.length} AI Models Found
+          </span>
+          <i data-lucide="chevron-up" style="width: 20px; height: 20px; color: var(--color-tech-blue); animation: bounceGentle 2s infinite;"></i>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid #4B5563; background-color: #171717;">
+          <div class="icon-${topRec.model.color}" style="padding: 0.5rem; border-radius: 0.5rem; flex-shrink: 0;">
+            <i data-lucide="${topRec.model.icon}" style="width: 16px; height: 16px;"></i>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-weight: 600; font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
+              🏆 ${topRec.model.name}
+            </div>
+            <div style="font-size: 0.75rem; color: #D1D5DB;">
+              Best match for your needs
+            </div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 1.125rem; font-weight: bold; color: var(--color-tech-green);">
+              $${topRec.monthlyCost.toFixed(0)}
+            </div>
+            <div style="font-size: 0.75rem; color: #D1D5DB;">per month</div>
+          </div>
+        </div>
+        
+        <p style="font-size: 0.75rem; text-align: center; color: #D1D5DB; margin-top: 0.75rem;">
+          👆 Tap or drag up to view all recommendations
+        </p>
+      `;
+      
+      // Reinitialize icons
+      lucide.createIcons();
+    }
+    
+    // Mobile drawer interactions
+    drawerPeek.addEventListener('click', () => {
+      if (hasUserInput()) {
+        drawerFull.classList.add('active');
+        drawerOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+    
+    drawerClose.addEventListener('click', () => {
+      drawerFull.classList.remove('active');
+      drawerOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    
+    drawerOverlay.addEventListener('click', () => {
+      drawerFull.classList.remove('active');
+      drawerOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    
+    // Initial render
+    calculateRecommendations();
+  </script>
+</body>
+</html>
