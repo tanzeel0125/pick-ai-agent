@@ -1,10 +1,6 @@
 # Micro SaaS - Find the best AI Agenct for your App
 
-## Project info
-
-Find the right AI for your app — faster, smarter, cheaper
-
-## Overview
+## Find the right AI for your app — faster, smarter, cheaper
 
 Pickly.AI helps founders, developers, and teams choose the best AI model for their product.
 
