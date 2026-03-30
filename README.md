@@ -1,73 +1,98 @@
-# Welcome to your Lovable project
+# Micro SaaS - Find the best AI Agenct for your App
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/1385c4bc-0274-4926-9c48-d1122ce05cf6
+Find the right AI for your app — faster, smarter, cheaper
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+Pickly.AI helps founders, developers, and teams choose the best AI model for their product.
 
-**Use Lovable**
+Instead of wasting weeks testing different APIs like ChatGPT, Gemini, or Claude, Pickly.AI lets you compare, evaluate, and select the right AI agent based on your exact use case — all in one place.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1385c4bc-0274-4926-9c48-d1122ce05cf6) and start prompting.
+## The Problem
 
-Changes made via Lovable will be committed automatically to this repo.
+Choosing an AI model today is confusing:
 
-**Use your preferred IDE**
+Too many options (ChatGPT, Gemini, Claude, etc.)
+Each has different strengths (reasoning, speed, context)
+Pricing varies and is hard to compare
+Requires time-consuming trial and error
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Most founders guess — or overbuild before validating.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## The Solution
 
-Follow these steps:
+Pickly.AI simplifies the process by helping you:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+🎯 Match AI models to your specific use case
+⚖️ Compare top AI agents side-by-side
+💰 Understand real cost differences
+⚡ Make faster, data-driven decisions
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Key Features
+AI Model Matching
+Get recommendations based on your app requirements
+Cost Comparison
+Compare pricing across models like ChatGPT, Gemini, and Claude
+Use Case-Based Filtering
+Find the best AI for chat, automation, content, data, etc.
+Simple & Intuitive UI
+No technical deep-dives needed to get started
+Fast Decision Making
+Save hours (or days) of research and testing
 
-# Step 3: Install the necessary dependencies.
-npm i
+## How It Works
+Describe your app or use case
+Pickly analyzes your needs
+Get matched with the best AI models
+Compare performance and cost
+Choose and start building
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Who It's For
+Startup founders building AI-powered products
+Developers choosing between LLM APIs
+Product managers exploring AI integrations
+Agencies building client AI solutions
 
-**Edit a file directly in GitHub**
+## Supported AI Models
+OpenAI (ChatGPT)
+Google (Gemini)
+Anthropic (Claude)
+More coming soon...
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Why Pickly.AI?
 
-**Use GitHub Codespaces**
+Because choosing the wrong AI model can:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Increase your costs
+Hurt product performance
+Slow down development
 
-## What technologies are used for this project?
+Pickly helps you get it right from day one.
 
-This project is built with:
+## Tech Stack (Optional - customize as needed)
+Frontend: React / Next.js
+Backend: Node.js / Express
+AI Integrations: OpenAI, Google AI, Anthropic
+Database: PostgreSQL / MongoDB
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Vision
 
-## How can I deploy this project?
+We believe the future isn’t just AI — it’s choosing the right AI.
 
-Simply open [Lovable](https://lovable.dev/projects/1385c4bc-0274-4926-9c48-d1122ce05cf6) and click on Share -> Publish.
+Pickly.AI aims to become the go-to platform for AI decision-making, helping builders move faster with confidence.
 
-## Can I connect a custom domain to my Lovable project?
+## Contributing
 
-Yes, you can!
+Contributions, ideas, and feedback are always welcome.
+Feel free to open an issue or submit a PR.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Contact
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Built by Techpacity
+🌐 http://techpacity.agency
+
+## Support
+
+If you find this useful, consider giving it a ⭐ on GitHub — it helps a lot!
