@@ -92,3 +92,7 @@ Built by Techpacity
 ## Support
 
 If you find this useful, consider giving it a ⭐ on GitHub — it helps a lot!
+
+## Contact
+
+**WhatsApp** — [+1 (920) 828-6711](https://wa.me/19208286711)
